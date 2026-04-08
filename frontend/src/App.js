@@ -9,9 +9,13 @@ import Login from './pages/Login';
 import CandidateDashboard from './pages/candidate/CandidateDashboard';
 import JobLeads from './pages/candidate/JobLeads';
 import ResumeLab from './pages/candidate/ResumeLab';
+import RecruiterPortal from './pages/candidate/RecruiterPortal';
+import Matches from './pages/candidate/Matches';
+import Applications from './pages/candidate/Applications';
 import BusinessDashboard from './pages/business/BusinessDashboard';
 import CandidateManagement from './pages/business/CandidateManagement';
 import OutreachAutomation from './pages/business/OutreachAutomation';
+import Analytics from './pages/business/Analytics';
 import AdminDashboard from './pages/admin/AdminDashboard';
 
 // Protected Route Component
@@ -52,7 +56,7 @@ function App() {
               } />
               <Route path="/candidate/matches" element={
                 <ProtectedRoute allowedTypes={['candidate']}>
-                  <CandidateDashboard />
+                  <Matches />
                 </ProtectedRoute>
               } />
               <Route path="/candidate/resume" element={
@@ -62,12 +66,12 @@ function App() {
               } />
               <Route path="/candidate/applications" element={
                 <ProtectedRoute allowedTypes={['candidate']}>
-                  <CandidateDashboard />
+                  <Applications />
                 </ProtectedRoute>
               } />
               <Route path="/candidate/recruiters" element={
                 <ProtectedRoute allowedTypes={['candidate']}>
-                  <CandidateDashboard />
+                  <RecruiterPortal />
                 </ProtectedRoute>
               } />
               <Route path="/candidate/profile" element={
@@ -114,7 +118,7 @@ function App() {
               } />
               <Route path="/business/analytics" element={
                 <ProtectedRoute allowedTypes={['business']}>
-                  <BusinessDashboard />
+                  <Analytics />
                 </ProtectedRoute>
               } />
               <Route path="/business/team" element={
