@@ -15,9 +15,14 @@ import Applications from './pages/candidate/Applications';
 import CandidateProfile from './pages/candidate/CandidateProfile';
 import CandidateSettings from './pages/candidate/CandidateSettings';
 import BusinessDashboard from './pages/business/BusinessDashboard';
+import BusinessLeads from './pages/business/BusinessLeads';
+import BusinessRecruiters from './pages/business/BusinessRecruiters';
 import CandidateManagement from './pages/business/CandidateManagement';
+import BusinessMatches from './pages/business/BusinessMatches';
 import OutreachAutomation from './pages/business/OutreachAutomation';
 import Analytics from './pages/business/Analytics';
+import BusinessTeam from './pages/business/BusinessTeam';
+import BusinessSettings from './pages/business/BusinessSettings';
 import AdminDashboard from './pages/admin/AdminDashboard';
 
 // Protected Route Component
@@ -95,12 +100,12 @@ function App() {
               } />
               <Route path="/business/leads" element={
                 <ProtectedRoute allowedTypes={['business']}>
-                  <BusinessDashboard />
+                  <BusinessLeads />
                 </ProtectedRoute>
               } />
               <Route path="/business/recruiters" element={
                 <ProtectedRoute allowedTypes={['business']}>
-                  <BusinessDashboard />
+                  <BusinessRecruiters />
                 </ProtectedRoute>
               } />
               <Route path="/business/candidates" element={
@@ -110,7 +115,7 @@ function App() {
               } />
               <Route path="/business/matches" element={
                 <ProtectedRoute allowedTypes={['business']}>
-                  <BusinessDashboard />
+                  <BusinessMatches />
                 </ProtectedRoute>
               } />
               <Route path="/business/outreach" element={
@@ -125,12 +130,12 @@ function App() {
               } />
               <Route path="/business/team" element={
                 <ProtectedRoute allowedTypes={['business']}>
-                  <BusinessDashboard />
+                  <BusinessTeam />
                 </ProtectedRoute>
               } />
               <Route path="/business/settings" element={
                 <ProtectedRoute allowedTypes={['business']}>
-                  <BusinessDashboard />
+                  <BusinessSettings />
                 </ProtectedRoute>
               } />
               
