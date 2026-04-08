@@ -1,0 +1,121 @@
+{
+  "project_name": "C2C Staffing Lead Platform",
+  "theme_and_archetype": {
+    "theme": "LIGHT_AND_DARK_SUPPORT",
+    "archetype": "Archetype 4 (Swiss & High-Contrast)",
+    "description": "An authoritative, data-dense 'Command Center' for staffing outreach. Minimalist structural grayscale with high-contrast signal colors to direct action. Emphasizes functional beauty, scanability, and F-Pattern information architecture."
+  },
+  "typography": {
+    "heading_font": "Outfit",
+    "body_font": "IBM Plex Sans",
+    "strategy": "The 'Soft Utility' pairing. Outfit provides a geometric, slightly technical but approachable feel for headings and metrics. IBM Plex Sans ensures maximum legibility for data-heavy tables and dense recruitment information.",
+    "scale": {
+      "h1": "text-4xl sm:text-5xl lg:text-6xl tracking-tight leading-none font-semibold",
+      "h2": "text-2xl sm:text-3xl lg:text-4xl tracking-tight leading-tight",
+      "h3": "text-xl sm:text-2xl font-medium",
+      "h4": "text-lg sm:text-xl font-medium",
+      "body": "text-sm sm:text-base leading-relaxed",
+      "label": "text-xs tracking-[0.2em] uppercase font-bold"
+    }
+  },
+  "color_system": {
+    "light_mode": {
+      "background": "bg-zinc-50",
+      "surface": "bg-white",
+      "surface_glass": "bg-white/70 backdrop-blur-xl backdrop-saturate-150 border border-zinc-200/50",
+      "text_primary": "text-zinc-950",
+      "text_secondary": "text-zinc-500",
+      "border": "border-zinc-200",
+      "primary": "bg-blue-600 text-white hover:bg-blue-700",
+      "accent": "text-blue-600"
+    },
+    "dark_mode": {
+      "background": "bg-[#09090b]",
+      "surface": "bg-[#18181b]",
+      "surface_glass": "bg-[#18181b]/60 backdrop-blur-xl backdrop-saturate-150 border border-white/10",
+      "text_primary": "text-zinc-50",
+      "text_secondary": "text-zinc-400",
+      "border": "border-zinc-800",
+      "primary": "bg-blue-500 text-white hover:bg-blue-600",
+      "accent": "text-blue-400"
+    },
+    "status": {
+      "success": "bg-emerald-500/10 text-emerald-500 border-emerald-500/20",
+      "warning": "bg-amber-500/10 text-amber-500 border-amber-500/20",
+      "danger": "bg-rose-500/10 text-rose-500 border-rose-500/20"
+    }
+  },
+  "spacing_and_layout": {
+    "philosophy": "Generous Spacing inside containers (`p-6` or `p-8`) to prevent text collision. The 'Control Room' Grid for dashboards.",
+    "dashboard_grid": {
+      "container": "grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6",
+      "summary_widget": "col-span-1 p-6 rounded-xl border",
+      "primary_chart": "col-span-1 md:col-span-2 lg:col-span-3 p-6 rounded-xl border",
+      "feed_list": "col-span-1 row-span-2 p-6 rounded-xl border"
+    },
+    "general": {
+      "page_padding": "px-4 sm:px-6 lg:px-8 py-8 lg:py-12",
+      "container_max": "max-w-7xl mx-auto"
+    }
+  },
+  "components_strategy": {
+    "cards": "Flat solid surfaces with 1px subtle borders in dark mode. No massive soft shadows in dark mode. Light mode uses 1px border + shadow-sm.",
+    "buttons": "Must have explicit hover colors. Hover state color must be a lighter hue of the active state. Use `ring-2` for focus states.",
+    "navigation": "Collapsible left sidebar for the Command Center. Use 'Crystal Glass' top header for mobile and sticky sections. Glassmorphism must use `backdrop-saturate-150`.",
+    "tables": "Dense. Use `text-sm`. Status columns must use the status badge colors. Subgrid support for row alignment if necessary.",
+    "icons": "Use `@phosphor-icons/react` for a technical, crisp, and high-end enterprise aesthetic. Install via `yarn add @phosphor-icons/react`."
+  },
+  "animations": {
+    "micro_interactions": "Hover lift (`-translate-y-1`) for job cards and candidate profiles. Subtle `opacity-80` to `opacity-100` transition for secondary buttons.",
+    "page_transitions": "Framer motion staggered fade-in for grid items (`staggerChildren: 0.1`).",
+    "technical": "Avoid `transition-all`. Explicitly use `transition-colors duration-200` or `transition-transform duration-300 ease-out`."
+  },
+  "accessibility": {
+    "contrast": "Ensure all text on disabled or secondary backgrounds meets APCA standards. DO NOT use completely transparent backgrounds for text-bearing overlays.",
+    "testing": "All interactive elements MUST have `data-testid` (e.g., `data-testid='candidate-match-button'`)."
+  },
+  "media": {
+    "image_urls": [
+      {
+        "category": "hero_background_abstract",
+        "url": "https://images.pexels.com/photos/29703885/pexels-photo-29703885.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "description": "Sleek black metallic texture with flowing curves, perfect for login or landing page backgrounds."
+      },
+      {
+        "category": "dashboard_texture_dark",
+        "url": "https://images.pexels.com/photos/12707786/pexels-photo-12707786.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "description": "Abstract tunnel effect in blue tones. Use at very low opacity (10%) for empty states or dashboard hero sections."
+      },
+      {
+        "category": "avatar_professional_1",
+        "url": "https://images.unsplash.com/photo-1758518727888-ffa196002e59?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzR8MHwxfHNlYXJjaHwzfHxwcm9mZXNzaW9uYWwlMjBidXNpbmVzcyUyMHBlcnNvbiUyMHBvcnRyYWl0fGVufDB8fHx8MTc3NTYxODI5MXww&ixlib=rb-4.1.0&q=85",
+        "description": "Candidate or Recruiter Avatar"
+      },
+      {
+        "category": "avatar_professional_2",
+        "url": "https://images.pexels.com/photos/4687575/pexels-photo-4687575.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "description": "Candidate or Admin Avatar"
+      },
+      {
+        "category": "company_logo_1",
+        "url": "https://images.pexels.com/photos/15863044/pexels-photo-15863044.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "description": "Tech company logo for job postings or business profiles"
+      },
+      {
+        "category": "company_logo_2",
+        "url": "https://images.unsplash.com/photo-1551263640-1c007852f616?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NzB8MHwxfHNlYXJjaHwxfHxzdGFydHVwJTIwY29tcGFueSUyMGxvZ298ZW58MHx8fHwxNzc1NjE4Mjk5fDA&ixlib=rb-4.1.0&q=85",
+        "description": "Another tech company logo for the CRM pipeline"
+      }
+    ],
+    "rules": "Never use placeholder images (e.g., via.placeholder.com). If a user profile has no image, generate an initial-based SVG or use one of the avatars above."
+  },
+  "instructions_to_main_agent": [
+    "You MUST build this strictly as an Enterprise OS. Avoid 'toy-like' massive border-radii; stick to `rounded-lg` or `rounded-xl` maximum.",
+    "Implement Shadcn heavily for complex forms, tables, and dialogs. Strip away 'default' vercel looks by using the specified typography and tight borders.",
+    "Use standard grid F-pattern. The North Star metric (e.g., 'Total Candidates Matched' or 'Pipeline Value') must be top-left.",
+    "DO NOT use Inter or standard sans for headings. Apply `font-family: 'Outfit'`.",
+    "For Dark Mode, NEVER use pure `#000000`. Rely on `bg-zinc-950` and `bg-zinc-900`. Borders must be `border-zinc-800`.",
+    "All navigation/headers overlaying content must use the 'Crystal Glass' effect (`backdrop-blur-xl bg-white/70` light, `bg-zinc-900/60` dark) with a `1px` subtle bottom border.",
+    "Add 'data-testid' to ALL interactive elements (buttons, links, form fields, tabs)."
+  ]
+}
