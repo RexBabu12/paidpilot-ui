@@ -12,6 +12,8 @@ import ResumeLab from './pages/candidate/ResumeLab';
 import RecruiterPortal from './pages/candidate/RecruiterPortal';
 import Matches from './pages/candidate/Matches';
 import Applications from './pages/candidate/Applications';
+import CandidateProfile from './pages/candidate/CandidateProfile';
+import CandidateSettings from './pages/candidate/CandidateSettings';
 import BusinessDashboard from './pages/business/BusinessDashboard';
 import CandidateManagement from './pages/business/CandidateManagement';
 import OutreachAutomation from './pages/business/OutreachAutomation';
@@ -76,12 +78,12 @@ function App() {
               } />
               <Route path="/candidate/profile" element={
                 <ProtectedRoute allowedTypes={['candidate']}>
-                  <CandidateDashboard />
+                  <CandidateProfile />
                 </ProtectedRoute>
               } />
               <Route path="/candidate/settings" element={
                 <ProtectedRoute allowedTypes={['candidate']}>
-                  <CandidateDashboard />
+                  <CandidateSettings />
                 </ProtectedRoute>
               } />
               
