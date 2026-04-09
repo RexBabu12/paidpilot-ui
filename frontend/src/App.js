@@ -22,6 +22,14 @@ import Analytics from './pages/business/Analytics';
 import BusinessTeam from './pages/business/BusinessTeam';
 import BusinessSettings from './pages/business/BusinessSettings';
 import AdminDashboard from './pages/admin/AdminDashboard';
+import AdminLeads from './pages/admin/AdminLeads';
+import AdminCustomers from './pages/admin/AdminCustomers';
+import AdminRecruiters from './pages/admin/AdminRecruiters';
+import AdminOutreach from './pages/admin/AdminOutreach';
+import AdminCandidates from './pages/admin/AdminCandidates';
+import AdminScraperControl from './pages/admin/AdminScraperControl';
+import AdminSystemInfo from './pages/admin/AdminSystemInfo';
+import AdminSettings from './pages/admin/AdminSettings';
 
 // Protected Route Component
 const ProtectedRoute = ({ children, allowedTypes }) => {
@@ -133,29 +141,44 @@ function App() {
                   <AdminDashboard />
                 </ProtectedRoute>
               } />
+              <Route path="/admin/leads" element={
+                <ProtectedRoute allowedTypes={['admin']}>
+                  <AdminLeads />
+                </ProtectedRoute>
+              } />
               <Route path="/admin/customers" element={
                 <ProtectedRoute allowedTypes={['admin']}>
-                  <AdminDashboard />
-                </ProtectedRoute>
-              } />
-              <Route path="/admin/scraping" element={
-                <ProtectedRoute allowedTypes={['admin']}>
-                  <AdminDashboard />
-                </ProtectedRoute>
-              } />
-              <Route path="/admin/quality" element={
-                <ProtectedRoute allowedTypes={['admin']}>
-                  <AdminDashboard />
+                  <AdminCustomers />
                 </ProtectedRoute>
               } />
               <Route path="/admin/recruiters" element={
                 <ProtectedRoute allowedTypes={['admin']}>
-                  <AdminDashboard />
+                  <AdminRecruiters />
+                </ProtectedRoute>
+              } />
+              <Route path="/admin/outreach" element={
+                <ProtectedRoute allowedTypes={['admin']}>
+                  <AdminOutreach />
+                </ProtectedRoute>
+              } />
+              <Route path="/admin/candidates" element={
+                <ProtectedRoute allowedTypes={['admin']}>
+                  <AdminCandidates />
+                </ProtectedRoute>
+              } />
+              <Route path="/admin/scraper" element={
+                <ProtectedRoute allowedTypes={['admin']}>
+                  <AdminScraperControl />
+                </ProtectedRoute>
+              } />
+              <Route path="/admin/system" element={
+                <ProtectedRoute allowedTypes={['admin']}>
+                  <AdminSystemInfo />
                 </ProtectedRoute>
               } />
               <Route path="/admin/settings" element={
                 <ProtectedRoute allowedTypes={['admin']}>
-                  <AdminDashboard />
+                  <AdminSettings />
                 </ProtectedRoute>
               } />
             </Routes>

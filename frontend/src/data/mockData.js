@@ -702,39 +702,212 @@ export const mockTeamMembers = [
 
 export const mockScrapingRuns = [
   {
-    id: 1,
-    source: 'LinkedIn',
-    startTime: '2024-01-15 06:00:00',
-    endTime: '2024-01-15 06:45:23',
-    scraped: 234,
-    qualified: 127,
-    duplicates: 89,
-    failed: 18,
-    status: 'Success',
-    successRate: 92.3
+    id: 1, source: 'LinkedIn', keyword: 'java developer c2c',
+    startTime: '2025-02-09 06:00:00', endTime: '2025-02-09 06:45:23',
+    scraped: 234, qualified: 127, duplicates: 89, failed: 18,
+    status: 'Success', successRate: 92.3,
+    errors: []
   },
   {
-    id: 2,
-    source: 'Dice',
-    startTime: '2024-01-15 06:30:00',
-    endTime: '2024-01-15 07:12:45',
-    scraped: 156,
-    qualified: 98,
-    duplicates: 45,
-    failed: 13,
-    status: 'Success',
-    successRate: 91.7
+    id: 2, source: 'LinkedIn', keyword: 'react developer w2',
+    startTime: '2025-02-09 06:30:00', endTime: '2025-02-09 07:12:45',
+    scraped: 156, qualified: 98, duplicates: 45, failed: 13,
+    status: 'Success', successRate: 91.7,
+    errors: []
   },
   {
-    id: 3,
-    source: 'LinkedIn',
-    startTime: '2024-01-14 06:00:00',
-    endTime: '2024-01-14 06:52:11',
-    scraped: 198,
-    qualified: 112,
-    duplicates: 67,
-    failed: 19,
-    status: 'Success',
-    successRate: 90.4
+    id: 3, source: 'LinkedIn', keyword: 'devops engineer c2c',
+    startTime: '2025-02-08 06:00:00', endTime: '2025-02-08 06:52:11',
+    scraped: 198, qualified: 112, duplicates: 67, failed: 19,
+    status: 'Success', successRate: 90.4,
+    errors: ['Timeout on page 14 - retried successfully']
+  },
+  {
+    id: 4, source: 'LinkedIn', keyword: 'data engineer remote',
+    startTime: '2025-02-08 07:00:00', endTime: '2025-02-08 07:38:00',
+    scraped: 89, qualified: 52, duplicates: 28, failed: 9,
+    status: 'Partial', successRate: 85.2,
+    errors: ['Rate limit hit after 89 posts', 'Session paused - cooling down']
+  },
+  {
+    id: 5, source: 'LinkedIn', keyword: 'sap consultant',
+    startTime: '2025-02-07 06:00:00', endTime: '2025-02-07 06:22:00',
+    scraped: 45, qualified: 31, duplicates: 10, failed: 4,
+    status: 'Success', successRate: 91.1,
+    errors: []
   }
 ];
+
+// ============= ADMIN PORTAL MOCK DATA =============
+
+export const mockSystemServices = {
+  scraper: {
+    name: 'LinkedIn Scraper',
+    status: 'Operational',
+    uptime: '99.7%',
+    lastCheck: '2 min ago',
+    portals: [
+      { name: 'LinkedIn Jobs', status: 'Active', lastRun: '35 min ago', postsToday: 487, errors: 0 },
+      { name: 'LinkedIn Groups', status: 'Active', lastRun: '1 hr ago', postsToday: 124, errors: 2 },
+      { name: 'Dice', status: 'Paused', lastRun: '6 hrs ago', postsToday: 0, errors: 0 },
+      { name: 'Indeed', status: 'Coming Soon', lastRun: 'N/A', postsToday: 0, errors: 0 }
+    ]
+  },
+  mailService: {
+    name: 'Email Service (SendGrid)',
+    status: 'Operational',
+    uptime: '99.9%',
+    lastCheck: '1 min ago',
+    stats: { sent: 342, delivered: 338, opened: 187, bounced: 4, failed: 0 },
+    recentEmails: [
+      { id: 1, to: 'sarah.j@techcorp.com', subject: 'Java Developer - Rajesh Kumar', status: 'Delivered', sentAt: '10 min ago' },
+      { id: 2, to: 'michael@digitalinnov.com', subject: 'React Dev - Maria Garcia', status: 'Opened', sentAt: '25 min ago' },
+      { id: 3, to: 'jmartinez@cloudscale.com', subject: 'DevOps Eng - David Park', status: 'Delivered', sentAt: '1 hr ago' },
+      { id: 4, to: 'dwilson@entsys.com', subject: '.NET Dev - Michael Chen', status: 'Bounced', sentAt: '2 hrs ago' },
+      { id: 5, to: 'landerson@datastream.com', subject: 'Data Eng - Priya Sharma', status: 'Delivered', sentAt: '3 hrs ago' },
+      { id: 6, to: 'tbradley@megacorp.com', subject: 'Cloud Arch - Ahmed Hassan', status: 'Opened', sentAt: '4 hrs ago' }
+    ]
+  },
+  documentEditor: {
+    name: 'Document Editor',
+    status: 'Operational',
+    uptime: '99.5%',
+    lastCheck: '3 min ago',
+    stats: { resumesProcessed: 156, tailoredToday: 23, avgProcessingTime: '4.2s' }
+  },
+  llm: {
+    name: 'LLM Service (GPT-4)',
+    status: 'Operational',
+    uptime: '99.8%',
+    lastCheck: '30 sec ago',
+    costs: {
+      today: 12.47,
+      thisWeek: 78.32,
+      thisMonth: 312.89,
+      budget: 500.00
+    },
+    usage: {
+      resumeTailoring: { calls: 156, tokens: 234000, cost: 4.68 },
+      emailGeneration: { calls: 342, tokens: 128000, cost: 2.56 },
+      jobParsing: { calls: 611, tokens: 456000, cost: 9.12 },
+      skillMatching: { calls: 89, tokens: 67000, cost: 1.34 }
+    }
+  },
+  database: {
+    name: 'MongoDB Atlas',
+    status: 'Operational',
+    uptime: '99.99%',
+    lastCheck: '15 sec ago',
+    stats: { totalDocs: '2.4M', storageUsed: '4.7 GB', connections: 23, avgQueryTime: '12ms' }
+  }
+};
+
+export const mockLinkedInAccounts = [
+  { id: 1, email: 'scraper1@staffpro.com', name: 'StaffPro Bot 1', status: 'Active', sessionsToday: 3, sessionBudget: 8, pagesVisited: 42, pageBudget: 50, cooldownUntil: null, flagReason: null, lastUsed: '35 min ago' },
+  { id: 2, email: 'scraper2@staffpro.com', name: 'StaffPro Bot 2', status: 'Active', sessionsToday: 2, sessionBudget: 8, pagesVisited: 28, pageBudget: 50, cooldownUntil: null, flagReason: null, lastUsed: '1 hr ago' },
+  { id: 3, email: 'scraper3@staffpro.com', name: 'StaffPro Bot 3', status: 'Cooling Down', sessionsToday: 6, sessionBudget: 8, pagesVisited: 48, pageBudget: 50, cooldownUntil: '2025-02-09T14:00:00Z', flagReason: null, lastUsed: '3 hrs ago' },
+  { id: 4, email: 'scraper4@staffpro.com', name: 'StaffPro Bot 4', status: 'Flagged', sessionsToday: 0, sessionBudget: 8, pagesVisited: 0, pageBudget: 50, cooldownUntil: null, flagReason: 'Unusual activity detected - manual review needed', lastUsed: '2 days ago' }
+];
+
+export const mockScraperKeywords = [
+  { id: 1, keyword: 'java developer c2c', enabled: true, lastSearched: '35 min ago', totalLeads: 1247, leadsThisWeek: 87 },
+  { id: 2, keyword: 'react developer c2c', enabled: true, lastSearched: '40 min ago', totalLeads: 982, leadsThisWeek: 72 },
+  { id: 3, keyword: 'devops engineer c2c', enabled: true, lastSearched: '45 min ago', totalLeads: 856, leadsThisWeek: 61 },
+  { id: 4, keyword: 'python developer c2c', enabled: true, lastSearched: '1 hr ago', totalLeads: 734, leadsThisWeek: 54 },
+  { id: 5, keyword: '.net developer c2c', enabled: true, lastSearched: '1 hr ago', totalLeads: 623, leadsThisWeek: 42 },
+  { id: 6, keyword: 'data engineer c2c', enabled: true, lastSearched: '1.5 hrs ago', totalLeads: 567, leadsThisWeek: 38 },
+  { id: 7, keyword: 'cloud architect c2c', enabled: true, lastSearched: '2 hrs ago', totalLeads: 445, leadsThisWeek: 31 },
+  { id: 8, keyword: 'sap consultant c2c', enabled: true, lastSearched: '2 hrs ago', totalLeads: 398, leadsThisWeek: 28 },
+  { id: 9, keyword: 'salesforce developer c2c', enabled: true, lastSearched: '3 hrs ago', totalLeads: 356, leadsThisWeek: 24 },
+  { id: 10, keyword: 'qa automation c2c', enabled: false, lastSearched: '1 day ago', totalLeads: 289, leadsThisWeek: 0 },
+  { id: 11, keyword: 'business analyst w2', enabled: true, lastSearched: '3 hrs ago', totalLeads: 234, leadsThisWeek: 18 },
+  { id: 12, keyword: 'scrum master c2c', enabled: false, lastSearched: '3 days ago', totalLeads: 178, leadsThisWeek: 0 }
+];
+
+export const mockScraperGroups = [
+  { id: 1, name: 'C2C Jobs - USA', url: 'https://linkedin.com/groups/c2c-jobs', enabled: true, lastScraped: '1 hr ago', totalPosts: 3421, members: '45.2K' },
+  { id: 2, name: 'IT Staffing Network', url: 'https://linkedin.com/groups/it-staffing', enabled: true, lastScraped: '2 hrs ago', totalPosts: 2897, members: '38.1K' },
+  { id: 3, name: 'Bench Sales Recruiters', url: 'https://linkedin.com/groups/bench-sales', enabled: true, lastScraped: '3 hrs ago', totalPosts: 1823, members: '22.7K' },
+  { id: 4, name: 'W2 Contract Jobs', url: 'https://linkedin.com/groups/w2-jobs', enabled: false, lastScraped: '5 days ago', totalPosts: 987, members: '15.3K' }
+];
+
+export const mockAdminCustomers = [
+  {
+    id: 1, company: 'TechStaff Solutions', plan: 'Enterprise', status: 'Active',
+    users: 12, candidates: 45, submissions: 342, placements: 23,
+    joinedDate: 'Jan 2024', lastActive: '2 min ago', monthlySpend: 2499,
+    contacts: [
+      { name: 'John Smith', email: 'john@techstaff.com', role: 'Admin', lastLogin: '2 min ago' },
+      { name: 'Sarah Lee', email: 'sarah@techstaff.com', role: 'Recruiter', lastLogin: '1 hr ago' }
+    ]
+  },
+  {
+    id: 2, company: 'Quantum Recruiters', plan: 'Professional', status: 'Active',
+    users: 8, candidates: 28, submissions: 198, placements: 15,
+    joinedDate: 'Mar 2024', lastActive: '15 min ago', monthlySpend: 999,
+    contacts: [
+      { name: 'Mike Johnson', email: 'mike@quantum.com', role: 'Admin', lastLogin: '15 min ago' }
+    ]
+  },
+  {
+    id: 3, company: 'ProStaffing Inc', plan: 'Professional', status: 'Active',
+    users: 6, candidates: 19, submissions: 156, placements: 11,
+    joinedDate: 'Jun 2024', lastActive: '3 hrs ago', monthlySpend: 999,
+    contacts: [
+      { name: 'Lisa Brown', email: 'lisa@prostaffing.com', role: 'Admin', lastLogin: '3 hrs ago' }
+    ]
+  },
+  {
+    id: 4, company: 'Elite Consulting', plan: 'Starter', status: 'Trial',
+    users: 2, candidates: 5, submissions: 23, placements: 1,
+    joinedDate: 'Jan 2025', lastActive: '1 day ago', monthlySpend: 0,
+    contacts: [
+      { name: 'Tom Wilson', email: 'tom@eliteconsult.com', role: 'Admin', lastLogin: '1 day ago' }
+    ]
+  },
+  {
+    id: 5, company: 'Apex HR Solutions', plan: 'Enterprise', status: 'Active',
+    users: 15, candidates: 67, submissions: 523, placements: 41,
+    joinedDate: 'Nov 2023', lastActive: '5 min ago', monthlySpend: 2499,
+    contacts: [
+      { name: 'Rachel Green', email: 'rachel@apexhr.com', role: 'Admin', lastLogin: '5 min ago' },
+      { name: 'David Kim', email: 'david@apexhr.com', role: 'Manager', lastLogin: '30 min ago' }
+    ]
+  }
+];
+
+export const mockAdminOutreach = [
+  { id: 1, to: 'Sarah Johnson', email: 'sarah.j@techcorp.com', subject: 'Sr Java Dev - Rajesh Kumar', candidate: 'Rajesh Kumar', job: 'Senior Java Developer', status: 'Opened', sentAt: '2025-02-09 10:30', customer: 'TechStaff Solutions' },
+  { id: 2, to: 'Michael Chen', email: 'michael@digitalinnov.com', subject: 'React Dev - Maria Garcia', candidate: 'Maria Garcia', job: 'React Frontend Engineer', status: 'Delivered', sentAt: '2025-02-09 09:15', customer: 'TechStaff Solutions' },
+  { id: 3, to: 'Jennifer Martinez', email: 'jmartinez@cloudscale.com', subject: 'DevOps - David Park', candidate: 'David Park', job: 'DevOps Engineer', status: 'Replied', sentAt: '2025-02-08 14:00', customer: 'Quantum Recruiters' },
+  { id: 4, to: 'David Wilson', email: 'dwilson@entsys.com', subject: '.NET Dev - Michael Chen', candidate: 'Michael Chen', job: 'Full Stack .NET Developer', status: 'Bounced', sentAt: '2025-02-08 11:30', customer: 'ProStaffing Inc' },
+  { id: 5, to: 'Lisa Anderson', email: 'landerson@datastream.com', subject: 'Data Eng - Priya Sharma', candidate: 'Priya Sharma', job: 'Python Data Engineer', status: 'Delivered', sentAt: '2025-02-08 09:45', customer: 'Quantum Recruiters' },
+  { id: 6, to: 'Tom Bradley', email: 'tbradley@megacorp.com', subject: 'Cloud Arch - Ahmed Hassan', candidate: 'Ahmed Hassan', job: 'Cloud Architect - AWS', status: 'Opened', sentAt: '2025-02-07 16:00', customer: 'Apex HR Solutions' },
+  { id: 7, to: 'Patricia Gomez', email: 'pgomez@crmsolutions.com', subject: 'SF Dev - Lisa Wang', candidate: 'Lisa Wang', job: 'Salesforce Developer', status: 'Sent', sentAt: '2025-02-07 14:30', customer: 'Apex HR Solutions' },
+  { id: 8, to: 'Rachel Kim', email: 'rkim@globalconsult.com', subject: 'SAP - Carlos Rivera', candidate: 'Carlos Rivera', job: 'SAP S/4HANA Consultant', status: 'Delivered', sentAt: '2025-02-07 10:00', customer: 'Elite Consulting' }
+];
+
+export const mockAdminSettings = {
+  scraper: {
+    fetchWindowHours: 1,
+    dailySessionBudget: 8,
+    dailyPageBudget: 50,
+    keywordsPerSession: 5,
+    maxPostsPerSearch: 25
+  },
+  notifications: {
+    emailOnNewLeads: true,
+    emailOnErrors: true,
+    emailOnAccountFlagged: true,
+    emailOnBudgetExhausted: true,
+    slackWebhook: 'https://hooks.slack.com/services/T00/B00/xxx',
+    alertThreshold: 5
+  },
+  outreach: {
+    defaultSignature: 'Best regards,\\nStaffPro Team',
+    replyToAddress: 'outreach@staffpro.com',
+    smtpHost: 'smtp.sendgrid.net',
+    smtpPort: 587,
+    dailyLimitPerCandidate: 10
+  }
+};

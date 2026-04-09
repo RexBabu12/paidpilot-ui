@@ -13,7 +13,10 @@ import {
   X,
   User,
   Target,
-  Buildings
+  Buildings,
+  Robot,
+  CurrencyDollar,
+  Database
 } from '@phosphor-icons/react';
 import { useAuth } from '../contexts/AuthContext';
 import { ThemeToggle } from './ThemeToggle';
@@ -41,10 +44,13 @@ const navigationByType = {
   ],
   admin: [
     { name: 'Dashboard', icon: SquaresFour, path: '/admin/dashboard' },
+    { name: 'Jobs / Leads', icon: Briefcase, path: '/admin/leads' },
     { name: 'Customers', icon: Buildings, path: '/admin/customers' },
-    { name: 'Scraping Ops', icon: ChartBar, path: '/admin/scraping' },
-    { name: 'Lead Quality', icon: Target, path: '/admin/quality' },
     { name: 'Recruiters', icon: UsersThree, path: '/admin/recruiters' },
+    { name: 'Outreach', icon: EnvelopeSimple, path: '/admin/outreach' },
+    { name: 'Candidates', icon: User, path: '/admin/candidates' },
+    { name: 'Scraper Control', icon: Robot, path: '/admin/scraper' },
+    { name: 'System Info', icon: Database, path: '/admin/system' },
     { name: 'Settings', icon: Gear, path: '/admin/settings' }
   ]
 };
