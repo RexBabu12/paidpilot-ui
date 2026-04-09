@@ -33,9 +33,8 @@ const navigationByType = {
   business: [
     { name: 'Dashboard', icon: SquaresFour, path: '/business/dashboard' },
     { name: 'Job Leads', icon: Briefcase, path: '/business/leads' },
-    { name: 'Recruiters', icon: UsersThree, path: '/business/recruiters' },
     { name: 'Candidates', icon: User, path: '/business/candidates' },
-    { name: 'Matches', icon: Target, path: '/business/matches' },
+    { name: 'Recruiters', icon: UsersThree, path: '/business/recruiters' },
     { name: 'Outreach', icon: EnvelopeSimple, path: '/business/outreach' },
     { name: 'Analytics', icon: ChartBar, path: '/business/analytics' },
     { name: 'Team', icon: Buildings, path: '/business/team' },

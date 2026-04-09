@@ -18,7 +18,6 @@ import BusinessDashboard from './pages/business/BusinessDashboard';
 import BusinessLeads from './pages/business/BusinessLeads';
 import BusinessRecruiters from './pages/business/BusinessRecruiters';
 import CandidateManagement from './pages/business/CandidateManagement';
-import BusinessMatches from './pages/business/BusinessMatches';
 import OutreachAutomation from './pages/business/OutreachAutomation';
 import Analytics from './pages/business/Analytics';
 import BusinessTeam from './pages/business/BusinessTeam';
@@ -111,11 +110,6 @@ function App() {
               <Route path="/business/candidates" element={
                 <ProtectedRoute allowedTypes={['business']}>
                   <CandidateManagement />
-                </ProtectedRoute>
-              } />
-              <Route path="/business/matches" element={
-                <ProtectedRoute allowedTypes={['business']}>
-                  <BusinessMatches />
                 </ProtectedRoute>
               } />
               <Route path="/business/outreach" element={
