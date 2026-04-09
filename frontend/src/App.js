@@ -10,7 +10,6 @@ import CandidateDashboard from './pages/candidate/CandidateDashboard';
 import JobLeads from './pages/candidate/JobLeads';
 import ResumeLab from './pages/candidate/ResumeLab';
 import RecruiterPortal from './pages/candidate/RecruiterPortal';
-import Matches from './pages/candidate/Matches';
 import Applications from './pages/candidate/Applications';
 import CandidateProfile from './pages/candidate/CandidateProfile';
 import CandidateSettings from './pages/candidate/CandidateSettings';
@@ -58,11 +57,6 @@ function App() {
               <Route path="/candidate/jobs" element={
                 <ProtectedRoute allowedTypes={['candidate']}>
                   <JobLeads />
-                </ProtectedRoute>
-              } />
-              <Route path="/candidate/matches" element={
-                <ProtectedRoute allowedTypes={['candidate']}>
-                  <Matches />
                 </ProtectedRoute>
               } />
               <Route path="/candidate/resume" element={

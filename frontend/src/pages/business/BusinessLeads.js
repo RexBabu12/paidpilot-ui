@@ -39,10 +39,10 @@ const BusinessLeads = () => {
     let list = [...mockJobs];
     if (searchTerm) {
       const q = searchTerm.toLowerCase();
-      list = list.filter(j => j.title.toLowerCase().includes(q) || j.company.toLowerCase().includes(q) || j.skills.some(s => s.toLowerCase().includes(q)));
+      list = list.filter(j => j.role_title.toLowerCase().includes(q) || j.author_company.toLowerCase().includes(q) || j.skills.some(s => s.toLowerCase().includes(q)));
     }
-    if (filters.engagementTypes.length > 0) list = list.filter(j => filters.engagementTypes.includes(j.engagementType));
-    if (filters.workModes.length > 0) list = list.filter(j => filters.workModes.includes(j.workMode));
+    if (filters.engagementTypes.length > 0) list = list.filter(j => filters.engagementTypes.includes(j.engagement_type));
+    if (filters.workModes.length > 0) list = list.filter(j => filters.workModes.includes(j.work_mode));
     return list;
   }, [searchTerm, filters]);
 
@@ -203,8 +203,8 @@ const BusinessLeads = () => {
                             <input type="checkbox" checked={selectedJobs.includes(job.id)} onChange={() => toggleJobSelect(job.id)} data-testid={`select-job-${job.id}`} className="w-4 h-4 rounded border-zinc-300 dark:border-zinc-700 text-blue-600" />
                           </td>
                           <td className="px-4 py-4">
-                            <p className="font-semibold text-zinc-900 dark:text-zinc-50 mb-1">{job.title}</p>
-                            <p className="text-xs text-zinc-600 dark:text-zinc-400">{job.company} | {job.location}</p>
+                            <p className="font-semibold text-zinc-900 dark:text-zinc-50 mb-1">{job.role_title}</p>
+                            <p className="text-xs text-zinc-600 dark:text-zinc-400">{job.author_company} | {job.location}</p>
                           </td>
                           <td className="px-4 py-4">
                             <div className="flex flex-wrap gap-1">
@@ -216,12 +216,12 @@ const BusinessLeads = () => {
                           </td>
                           <td className="px-4 py-4">
                             <div className="flex flex-col gap-1">
-                              <span className={`inline-flex w-fit px-2 py-0.5 text-xs font-medium rounded ${job.engagementType === 'C2C' ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20' : job.engagementType === 'W2' ? 'bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20' : 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20'}`}>{job.engagementType}</span>
-                              <span className={`inline-flex w-fit px-2 py-0.5 text-xs font-medium rounded ${job.workMode === 'Remote' ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400' : job.workMode === 'Hybrid' ? 'bg-blue-500/10 text-blue-600 dark:text-blue-400' : 'bg-amber-500/10 text-amber-600 dark:text-amber-400'}`}>{job.workMode}</span>
+                              <span className={`inline-flex w-fit px-2 py-0.5 text-xs font-medium rounded ${job.engagement_type === 'C2C' ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20' : job.engagement_type === 'W2' ? 'bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20' : 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20'}`}>{job.engagement_type}</span>
+                              <span className={`inline-flex w-fit px-2 py-0.5 text-xs font-medium rounded ${job.work_mode === 'Remote' ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400' : job.work_mode === 'Hybrid' ? 'bg-blue-500/10 text-blue-600 dark:text-blue-400' : 'bg-amber-500/10 text-amber-600 dark:text-amber-400'}`}>{job.work_mode}</span>
                             </div>
                           </td>
-                          <td className="px-4 py-4 font-semibold text-zinc-900 dark:text-zinc-50">{job.rate || 'N/A'}</td>
-                          <td className="px-4 py-4 text-sm text-zinc-600 dark:text-zinc-400">{job.postedDate}</td>
+                          <td className="px-4 py-4 font-semibold text-zinc-900 dark:text-zinc-50">{job.rate_raw || 'N/A'}</td>
+                          <td className="px-4 py-4 text-sm text-zinc-600 dark:text-zinc-400">{new Date(job.scraped_at).toLocaleDateString()}</td>
                           <td className="px-4 py-4">
                             <div className="flex items-center justify-center gap-2">
                               <button className="p-1.5 text-zinc-600 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-500/10 rounded transition-colors" data-testid={`bookmark-job-${job.id}`} title="Bookmark">
@@ -251,15 +251,15 @@ const BusinessLeads = () => {
                   >
                     <div className="flex items-start justify-between mb-3">
                       <div className="flex-1 min-w-0">
-                        <h3 className="text-base font-semibold text-zinc-900 dark:text-zinc-50 mb-1">{job.title}</h3>
-                        <p className="text-sm text-zinc-600 dark:text-zinc-400">{job.company}</p>
+                        <h3 className="text-base font-semibold text-zinc-900 dark:text-zinc-50 mb-1">{job.role_title}</h3>
+                        <p className="text-sm text-zinc-600 dark:text-zinc-400">{job.author_company}</p>
                       </div>
                       <input type="checkbox" checked={selectedJobs.includes(job.id)} onChange={() => toggleJobSelect(job.id)} className="w-4 h-4 mt-1 rounded border-zinc-300 dark:border-zinc-700 text-blue-600" onClick={(e) => e.stopPropagation()} />
                     </div>
                     <div className="flex items-center gap-2 mb-3 text-xs text-zinc-500 dark:text-zinc-400">
                       <MapPin size={12} /> {job.location}
                       <span>|</span>
-                      <Clock size={12} /> {job.postedDate}
+                      <Clock size={12} /> {new Date(job.scraped_at).toLocaleDateString()}
                     </div>
                     <div className="flex flex-wrap gap-1 mb-3">
                       {job.skills.slice(0, 4).map((skill, sidx) => (
@@ -268,10 +268,10 @@ const BusinessLeads = () => {
                     </div>
                     <div className="flex items-center justify-between pt-3 border-t border-zinc-100 dark:border-zinc-800">
                       <div className="flex gap-2">
-                        <span className={`px-2 py-0.5 text-xs font-medium rounded ${job.engagementType === 'C2C' ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400' : 'bg-blue-500/10 text-blue-600 dark:text-blue-400'}`}>{job.engagementType}</span>
-                        <span className={`px-2 py-0.5 text-xs font-medium rounded ${job.workMode === 'Remote' ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400' : 'bg-amber-500/10 text-amber-600 dark:text-amber-400'}`}>{job.workMode}</span>
+                        <span className={`px-2 py-0.5 text-xs font-medium rounded ${job.engagement_type === 'C2C' ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400' : 'bg-blue-500/10 text-blue-600 dark:text-blue-400'}`}>{job.engagement_type}</span>
+                        <span className={`px-2 py-0.5 text-xs font-medium rounded ${job.work_mode === 'Remote' ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400' : 'bg-amber-500/10 text-amber-600 dark:text-amber-400'}`}>{job.work_mode}</span>
                       </div>
-                      <span className="text-sm font-bold text-zinc-900 dark:text-zinc-50">{job.rate || 'N/A'}</span>
+                      <span className="text-sm font-bold text-zinc-900 dark:text-zinc-50">{job.rate_raw || 'N/A'}</span>
                     </div>
                   </motion.div>
                 ))}

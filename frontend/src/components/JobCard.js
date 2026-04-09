@@ -14,10 +14,10 @@ export const JobCard = ({ job, onViewDetails, onApply, showMatchScore = true }) 
       <div className="flex items-start justify-between mb-4">
         <div className="flex-1">
           <h3 className="text-xl font-semibold font-outfit text-zinc-900 dark:text-zinc-50 mb-1">
-            {job.title}
+            {job.role_title}
           </h3>
           <p className="text-sm text-zinc-600 dark:text-zinc-400">
-            {job.company} · {job.recruiter}
+            {job.author_company} - {job.author_name}
           </p>
         </div>
         {showMatchScore && job.matchScore && (
@@ -32,17 +32,17 @@ export const JobCard = ({ job, onViewDetails, onApply, showMatchScore = true }) 
 
       <div className="flex flex-wrap gap-2 mb-4">
         <span className="px-3 py-1 rounded-full text-xs font-medium bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20">
-          {job.engagementType}
+          {job.engagement_type}
         </span>
         <span className="px-3 py-1 rounded-full text-xs font-medium bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300">
-          {job.workMode}
+          {job.work_mode}
         </span>
         <span className="px-3 py-1 rounded-full text-xs font-medium bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300">
           {job.location}
         </span>
-        {job.rate && (
+        {job.rate_raw && (
           <span className="px-3 py-1 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
-            {job.rate}
+            {job.rate_raw}
           </span>
         )}
       </div>
@@ -67,7 +67,7 @@ export const JobCard = ({ job, onViewDetails, onApply, showMatchScore = true }) 
 
       <div className="flex items-center justify-between pt-4 border-t border-zinc-200 dark:border-zinc-800">
         <span className="text-xs text-zinc-500 dark:text-zinc-400">
-          Posted {job.postedDate}
+          Scraped {new Date(job.scraped_at).toLocaleDateString()}
         </span>
         <div className="flex gap-2">
           <button

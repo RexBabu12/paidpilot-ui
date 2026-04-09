@@ -22,8 +22,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 const navigationByType = {
   candidate: [
     { name: 'Dashboard', icon: SquaresFour, path: '/candidate/dashboard' },
-    { name: 'Job Leads', icon: Briefcase, path: '/candidate/jobs' },
-    { name: 'Matches', icon: Target, path: '/candidate/matches' },
+    { name: 'Jobs Explorer', icon: Briefcase, path: '/candidate/jobs' },
     { name: 'Resume Lab', icon: FileText, path: '/candidate/resume' },
     { name: 'Applications', icon: EnvelopeSimple, path: '/candidate/applications' },
     { name: 'Recruiters', icon: UsersThree, path: '/candidate/recruiters' },

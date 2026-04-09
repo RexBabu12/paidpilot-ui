@@ -145,14 +145,14 @@ const BusinessDashboard = () => {
               <div className="divide-y divide-zinc-100 dark:divide-zinc-800">
                 {mockJobs.slice(0, 4).map((job) => (
                   <div key={job.id} className="px-6 py-3 hover:bg-zinc-50 dark:hover:bg-zinc-900/30 transition-colors">
-                    <p className="text-sm font-medium text-zinc-900 dark:text-zinc-50">{job.title}</p>
+                    <p className="text-sm font-medium text-zinc-900 dark:text-zinc-50">{job.role_title}</p>
                     <div className="flex items-center gap-2 mt-1">
-                      <span className="text-xs text-zinc-500 dark:text-zinc-400">{job.company}</span>
+                      <span className="text-xs text-zinc-500 dark:text-zinc-400">{job.author_company}</span>
                       <span className="text-xs text-zinc-400">|</span>
                       <span className={`text-xs px-1.5 py-0.5 rounded ${
-                        job.engagementType === 'C2C' ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400' : 'bg-blue-500/10 text-blue-600 dark:text-blue-400'
-                      }`}>{job.engagementType}</span>
-                      <span className="text-xs text-zinc-500 dark:text-zinc-400">{job.rate}</span>
+                        job.engagement_type === 'C2C' ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400' : 'bg-blue-500/10 text-blue-600 dark:text-blue-400'
+                      }`}>{job.engagement_type}</span>
+                      <span className="text-xs text-zinc-500 dark:text-zinc-400">{job.rate_raw}</span>
                     </div>
                   </div>
                 ))}
