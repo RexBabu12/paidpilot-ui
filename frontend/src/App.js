@@ -35,6 +35,11 @@ import AutoApplyDice from './pages/common/AutoApplyDice';
 import CustomVendorPortals from './pages/common/CustomVendorPortals';
 import MailAgent from './pages/common/MailAgent';
 import DesktopApp from './pages/common/DesktopApp';
+import LandingPage from './pages/marketing/LandingPage';
+import PricingPage from './pages/marketing/PricingPage';
+import AboutPage from './pages/marketing/AboutPage';
+import WhatWeDoPage from './pages/marketing/WhatWeDoPage';
+import SignupPage from './pages/marketing/SignupPage';
 
 // Protected Route Component
 const ProtectedRoute = ({ children, allowedTypes }) => {
@@ -58,8 +63,15 @@ function App() {
         <div className="App">
           <BrowserRouter>
             <Routes>
+              {/* Marketing Pages */}
+              <Route path="/" element={<LandingPage />} />
+              <Route path="/what-we-do" element={<WhatWeDoPage />} />
+              <Route path="/pricing" element={<PricingPage />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/signup" element={<SignupPage />} />
+              
+              {/* Auth */}
               <Route path="/login" element={<Login />} />
-              <Route path="/" element={<Navigate to="/login" replace />} />
               
               {/* Candidate Routes */}
               <Route path="/candidate/dashboard" element={
