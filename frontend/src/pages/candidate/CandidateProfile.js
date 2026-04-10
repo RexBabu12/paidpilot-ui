@@ -7,6 +7,7 @@ import { useAuth } from '../../contexts/AuthContext';
 
 const CandidateProfile = () => {
   const { user } = useAuth();
+  const isBenchCandidate = user?.type === 'bench';
   const [isEditing, setIsEditing] = useState(false);
   const [profile, setProfile] = useState({
     // Personal Information
