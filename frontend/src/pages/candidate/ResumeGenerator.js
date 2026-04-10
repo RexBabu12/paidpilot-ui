@@ -38,7 +38,7 @@ const ResumeGenerator = () => {
         >
           <div className="flex items-center gap-3 mb-2">
             <div className="w-10 h-10 rounded-lg bg-purple-100 dark:bg-purple-500/10 flex items-center justify-center">
-              <Sparkles size={24} weight="duotone" className="text-purple-600 dark:text-purple-400" />
+              <Sparkle size={24} weight="duotone" className="text-purple-600 dark:text-purple-400" />
             </div>
             <h1 className="text-3xl sm:text-4xl font-outfit font-semibold text-zinc-900 dark:text-zinc-50">AI Resume Generator</h1>
           </div>

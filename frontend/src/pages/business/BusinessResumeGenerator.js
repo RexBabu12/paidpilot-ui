@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { DashboardLayout } from '../../components/DashboardLayout';
 import { useAuth } from '../../contexts/AuthContext';
 import { motion } from 'framer-motion';
-import { Sparkles, FileText, Download, Copy, MagicWand, MagnifyingGlass, User } from '@phosphor-icons/react';
+import { Sparkle, FileText, Download, Copy, MagicWand, MagnifyingGlass } from '@phosphor-icons/react';
 import { mockResumes, mockBenchCandidates } from '../../data/mockData';
 
 const BusinessResumeGenerator = () => {
@@ -23,8 +23,27 @@ const BusinessResumeGenerator = () => {
   const handleGenerate = () => {
     setIsGenerating(true);
     setTimeout(() => {
+      const content = `${selectedCandidate.name.toUpperCase()}
+${selectedCandidate.primaryRole}
+
+PROFESSIONAL SUMMARY
+Highly skilled ${selectedCandidate.primaryRole} with ${selectedCandidate.experience} of experience. Proven track record of delivering scalable solutions and leading development teams.
+
+KEY SKILLS
+${selectedCandidate.skills.map(s => '• ' + s).join('\\n')}
+
+EXPERIENCE
+Senior Engineer | Previous Company (2020-Present)
+• Led development of microservices architecture serving 1M+ users
+• Optimized application performance by 40%
+${jobDescription.includes('team') ? '• Mentored team of 5 junior developers' : ''}
+
+EDUCATION
+Bachelor of Science in Computer Science
+University Name, 2015`;
+
       setGeneratedResume({
-        content: `${selectedCandidate.name.toUpperCase()}\\n${selectedCandidate.primaryRole}\\n\\nPROFESSIONAL SUMMARY\\nHighly skilled ${selectedCandidate.primaryRole} with ${selectedCandidate.experience} of experience in ${jobDescription.includes('React') ? 'React, Node.js, and modern web technologies' : 'full-stack development'}. Proven track record...\\n\\nKEY SKILLS\\n${selectedCandidate.skills.slice(0, 8).map(s => '\u2022 ' + s).join('\\n')}\\n\\nEXPERIENCE\\nSenior Engineer | Previous Company (2020-Present)\\n\u2022 Led development of microservices architecture\\n\u2022 Optimized performance by 40%\\n${jobDescription.includes('team') ? '\u2022 Mentored team members' : ''}`,
+        content: content,
         atsScore: 92,
         matchedKeywords: jobDescription.split(' ').filter(w => w.length > 4).slice(0, 8)
       });
@@ -36,29 +55,27 @@ const BusinessResumeGenerator = () => {
   return (
     <DashboardLayout userType={user?.type || 'business'}>
       <div className="max-w-5xl mx-auto">
-        {/* Header */}
         <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
           <div className="flex items-center gap-3 mb-2">
             <div className="w-10 h-10 rounded-lg bg-purple-100 dark:bg-purple-500/10 flex items-center justify-center">
-              <Sparkles size={24} weight="duotone" className="text-purple-600 dark:text-purple-400" />
+              <Sparkle size={24} weight="duotone" className="text-purple-600 dark:text-purple-400" />
             </div>
             <h1 className="text-3xl sm:text-4xl font-outfit font-semibold text-zinc-900 dark:text-zinc-50">AI Resume Generator</h1>
           </div>
           <p className="text-sm text-zinc-500 dark:text-zinc-400">Generate tailored resumes for your candidates</p>
         </motion.div>
 
-        {/* Progress */}
         <div className="flex items-center justify-center gap-4 mb-8">
           {[1, 2, 3, 4].map((s) => (
             <div key={s} className="flex items-center gap-2">
               <div className={`w-8 h-8 rounded-full flex items-center justify-center font-semibold text-sm ${
-                step >= s ? 'bg-purple-600 text-white' : 'bg-zinc-200 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400'
+                step >= s ? 'bg-purple-600 text-white' : 'bg-zinc-200 dark:bg-zinc-800 text-zinc-500'
               }`}>{s}</div>
               {s < 4 && <div className={`w-12 h-0.5 ${step > s ? 'bg-purple-600' : 'bg-zinc-200 dark:bg-zinc-800'}`} />}
             </div>
-          ))}\n        </div>
+          ))}
+        </div>
 
-        {/* Step 1: Select Candidate */}
         {step === 1 && (
           <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="bg-white dark:bg-[#18181b] border border-zinc-200 dark:border-zinc-800 rounded-xl p-8">
             <h2 className="text-xl font-semibold text-zinc-900 dark:text-zinc-50 mb-4">Select Candidate</h2>
@@ -85,7 +102,7 @@ const BusinessResumeGenerator = () => {
                     </div>
                     <div className="flex-1">
                       <p className="text-sm font-semibold text-zinc-900 dark:text-zinc-50">{candidate.name}</p>
-                      <p className="text-xs text-zinc-500 dark:text-zinc-400">{candidate.primaryRole} \u2022 {candidate.experience}</p>
+                      <p className="text-xs text-zinc-500 dark:text-zinc-400">{candidate.primaryRole} • {candidate.experience}</p>
                     </div>
                     <span className="px-2 py-1 bg-emerald-100 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 text-xs font-semibold rounded">{candidate.status}</span>
                   </div>
@@ -100,7 +117,6 @@ const BusinessResumeGenerator = () => {
           </motion.div>
         )}
 
-        {/* Step 2: Job Description */}
         {step === 2 && selectedCandidate && (
           <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="bg-white dark:bg-[#18181b] border border-zinc-200 dark:border-zinc-800 rounded-xl p-8">
             <div className="flex items-center gap-3 mb-6 p-4 bg-purple-50 dark:bg-purple-950/20 rounded-lg">
@@ -120,19 +136,18 @@ const BusinessResumeGenerator = () => {
               className="w-full h-64 px-4 py-3 bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600 resize-none"
             />
             <div className="flex gap-3 mt-4">
-              <button onClick={() => setStep(1)} className="px-6 py-3 border border-zinc-200 dark:border-zinc-800 rounded-lg hover:border-purple-600">Back</button>
+              <button onClick={() => setStep(1)} className="px-6 py-3 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-50 font-semibold rounded-lg hover:border-purple-600">Back</button>
               <button onClick={() => setStep(3)} disabled={!jobDescription.trim()} className="flex-1 px-6 py-3 bg-purple-600 text-white font-semibold rounded-lg hover:bg-purple-700 disabled:opacity-50">Next: Select Resume</button>
             </div>
           </motion.div>
         )}
 
-        {/* Step 3: Select Resume */}
         {step === 3 && (
           <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="bg-white dark:bg-[#18181b] border border-zinc-200 dark:border-zinc-800 rounded-xl p-8">
             <h2 className="text-xl font-semibold text-zinc-900 dark:text-zinc-50 mb-4">Select Base Resume</h2>
             <div className="space-y-3 mb-6">
               {mockResumes.slice(0, 6).map((resume) => (
-                <div key={resume.id} onClick={() => setSelectedResume(resume.id)} className={`p-4 border-2 rounded-lg cursor-pointer ${
+                <div key={resume.id} onClick={() => setSelectedResume(resume.id)} className={`p-4 border-2 rounded-lg cursor-pointer transition-all ${
                   selectedResume === resume.id ? 'border-purple-600 bg-purple-50 dark:bg-purple-950/20' : 'border-zinc-200 dark:border-zinc-800 hover:border-purple-400'
                 }`}>
                   <div className="flex items-center justify-between">
@@ -149,7 +164,7 @@ const BusinessResumeGenerator = () => {
               ))}
             </div>
             <div className="flex gap-3">
-              <button onClick={() => setStep(2)} className="px-6 py-3 border border-zinc-200 dark:border-zinc-800 rounded-lg">Back</button>
+              <button onClick={() => setStep(2)} className="px-6 py-3 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-50 font-semibold rounded-lg hover:border-purple-600">Back</button>
               <button onClick={handleGenerate} disabled={!selectedResume} className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-purple-600 text-white font-semibold rounded-lg hover:bg-purple-700 disabled:opacity-50">
                 <MagicWand size={20} weight="duotone" />Generate Resume
               </button>
@@ -157,7 +172,6 @@ const BusinessResumeGenerator = () => {
           </motion.div>
         )}
 
-        {/* Step 4: Generated */}
         {step === 4 && (
           <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }}>
             {isGenerating ? (
@@ -177,15 +191,15 @@ const BusinessResumeGenerator = () => {
                       </div>
                     </div>
                     <div className="flex gap-2">
-                      <button className="px-4 py-2 border border-zinc-200 dark:border-zinc-800 rounded-lg hover:border-purple-600 flex items-center gap-2"><Copy size={18} />Copy</button>
-                      <button className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 flex items-center gap-2"><Download size={18} />Download</button>
+                      <button className="px-4 py-2 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-50 font-semibold rounded-lg hover:border-purple-600 flex items-center gap-2"><Copy size={18} />Copy</button>
+                      <button className="px-4 py-2 bg-purple-600 text-white font-semibold rounded-lg hover:bg-purple-700 flex items-center gap-2"><Download size={18} />Download</button>
                     </div>
                   </div>
                 </div>
                 <div className="bg-white dark:bg-[#18181b] border border-zinc-200 dark:border-zinc-800 rounded-xl p-8">
                   <pre className="whitespace-pre-wrap font-mono text-sm text-zinc-900 dark:text-zinc-50 leading-relaxed">{generatedResume.content}</pre>
                 </div>
-                <button onClick={() => { setStep(1); setGeneratedResume(null); setJobDescription(''); setSelectedCandidate(null); setSelectedResume(null); }} className="w-full py-3 border border-zinc-200 dark:border-zinc-800 rounded-lg hover:border-purple-600">Generate Another Resume</button>
+                <button onClick={() => { setStep(1); setGeneratedResume(null); setJobDescription(''); setSelectedCandidate(null); setSelectedResume(null); }} className="w-full py-3 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-50 font-semibold rounded-lg hover:border-purple-600">Generate Another Resume</button>
               </div>
             )}
           </motion.div>

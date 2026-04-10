@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { DashboardLayout } from '../../components/DashboardLayout';
 import { useAuth } from '../../contexts/AuthContext';
 import { motion } from 'framer-motion';
-import { Check, Crown, TrendingUp, CreditCard, Calendar, AlertCircle } from '@phosphor-icons/react';
+import { Check, Crown, TrendingUp, CreditCard, Calendar, Warning } from '@phosphor-icons/react';
 
 const SubscriptionPage = () => {
   const { user } = useAuth();
@@ -253,7 +253,7 @@ const SubscriptionPage = () => {
           className="bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800 rounded-xl p-6"
         >
           <div className="flex items-start gap-3">
-            <AlertCircle size={20} className="text-red-600 dark:text-red-400 mt-0.5" />
+            <Warning size={20} className="text-red-600 dark:text-red-400 mt-0.5" />
             <div className="flex-1">
               <h3 className="text-sm font-semibold text-red-900 dark:text-red-100 mb-1">Cancel Subscription</h3>
               <p className="text-xs text-red-700 dark:text-red-300 mb-3">Your subscription will remain active until the end of the current billing period.</p>

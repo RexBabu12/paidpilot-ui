@@ -181,6 +181,16 @@ function App() {
                   <CandidateSettings />
                 </ProtectedRoute>
               } />
+              <Route path="/bench/subscription" element={
+                <ProtectedRoute allowedTypes={['bench']}>
+                  <SubscriptionPage />
+                </ProtectedRoute>
+              } />
+              <Route path="/bench/resume-generator" element={
+                <ProtectedRoute allowedTypes={['bench']}>
+                  <ResumeGenerator />
+                </ProtectedRoute>
+              } />
               
               {/* Bench Future Features */}
               <Route path="/bench/auto-apply-dice" element={
