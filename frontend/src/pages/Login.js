@@ -88,17 +88,35 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-zinc-50 dark:bg-[#09090b] flex items-center justify-center px-4 py-10 transition-colors duration-300 relative">
+    <div className="min-h-screen bg-zinc-50 dark:bg-[#09090b] transition-colors duration-300 relative">
       {/* Subtle bg pattern */}
       <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.06] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 20% 50%, #3b82f6 0%, transparent 50%), radial-gradient(circle at 80% 20%, #8b5cf6 0%, transparent 50%)' }} />
 
-      <div className="absolute top-4 right-4 z-50">
-        <ThemeToggle />
-      </div>
+      {/* Navigation Bar */}
+      <nav className="relative z-10 border-b border-zinc-200 dark:border-zinc-800 bg-white/80 dark:bg-[#18181b]/80 backdrop-blur-lg">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+          <Link to="/" className="flex items-center gap-2">
+            <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center">
+              <span className="text-white font-bold text-sm">PP</span>
+            </div>
+            <span className="font-outfit font-bold text-xl text-zinc-900 dark:text-zinc-50">PaidPilot</span>
+          </Link>
+          <div className="flex items-center gap-6">
+            <Link to="/pricing" className="text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+              Pricing
+            </Link>
+            <Link to="/about" className="text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+              About
+            </Link>
+            <ThemeToggle />
+          </div>
+        </div>
+      </nav>
 
-      <div className="w-full max-w-4xl">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
+      <div className="flex items-center justify-center px-4 py-10 min-h-[calc(100vh-73px)] relative z-10">
+        <div className="w-full max-w-4xl">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45 }}
           className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start"
@@ -248,6 +266,7 @@ const Login = () => {
             </p>
           </div>
         </motion.div>
+      </div>
       </div>
     </div>
   );

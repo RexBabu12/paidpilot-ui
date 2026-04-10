@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { DashboardLayout } from '../../components/DashboardLayout';
 import { useAuth } from '../../contexts/AuthContext';
 import { motion } from 'framer-motion';
-import { Sparkles, FileText, Download, Copy, MagicWand } from '@phosphor-icons/react';
+import { Sparkle, FileText, Download, Copy, MagicWand } from '@phosphor-icons/react';
 import { mockResumes } from '../../data/mockData';
 
 const ResumeGenerator = () => {
