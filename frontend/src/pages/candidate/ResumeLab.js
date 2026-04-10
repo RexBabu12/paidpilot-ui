@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { DashboardLayout } from '../../components/DashboardLayout';
 import { useAuth } from '../../contexts/AuthContext';
 import { mockResumes, mockApplications, mockJobs } from '../../data/mockData';
+import { Pagination } from '../../components/Pagination';
 import {
   FileText, Download, Upload, Pencil, Trash, Star, StarHalf,
   MagnifyingGlass, Funnel, X, Eye, MagicWand, EnvelopeSimple,
@@ -400,6 +401,73 @@ const FilterPanel = ({ filters, setFilters, allTags, onClear }) => {
         </div>
       </label>
 
+      {/* ATS Score Range */}
+      <div>
+        <label className="block text-[10px] font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 mb-2">
+          ATS Score: {filters.atsScoreMin} - {filters.atsScoreMax}
+        </label>
+        <div className="space-y-2">
+          <div>
+            <label className="text-[9px] text-zinc-500 dark:text-zinc-400 mb-0.5 block">Min</label>
+            <input
+              type="range"
+              min="0"
+              max="100"
+              step="5"
+              value={filters.atsScoreMin}
+              onChange={e => setFilters(p => ({ ...p, atsScoreMin: parseInt(e.target.value) }))}
+              className="w-full h-1.5 bg-zinc-200 dark:bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-blue-600"
+              data-testid="filter-ats-min"
+            />
+          </div>
+          <div>
+            <label className="text-[9px] text-zinc-500 dark:text-zinc-400 mb-0.5 block">Max</label>
+            <input
+              type="range"
+              min="0"
+              max="100"
+              step="5"
+              value={filters.atsScoreMax}
+              onChange={e => setFilters(p => ({ ...p, atsScoreMax: parseInt(e.target.value) }))}
+              className="w-full h-1.5 bg-zinc-200 dark:bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-blue-600"
+              data-testid="filter-ats-max"
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Usage Count */}
+      <div>
+        <label className="block text-[10px] font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 mb-1.5">
+          Min Usage Count: {filters.usageMin}
+        </label>
+        <input
+          type="range"
+          min="0"
+          max="20"
+          value={filters.usageMin}
+          onChange={e => setFilters(p => ({ ...p, usageMin: parseInt(e.target.value) }))}
+          className="w-full h-1.5 bg-zinc-200 dark:bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-blue-600"
+          data-testid="filter-usage-min"
+        />
+      </div>
+
+      {/* File Format */}
+      <div>
+        <label className="block text-[10px] font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 mb-1.5">File Format</label>
+        <select
+          value={filters.fileFormat}
+          onChange={e => setFilters(p => ({ ...p, fileFormat: e.target.value }))}
+          className="w-full px-2 py-1.5 text-xs bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg text-zinc-900 dark:text-zinc-50 focus:outline-none focus:ring-2 focus:ring-blue-600"
+          data-testid="filter-file-format"
+        >
+          <option value="All">All formats</option>
+          <option value="PDF">PDF</option>
+          <option value="DOCX">DOCX</option>
+          <option value="DOC">DOC</option>
+        </select>
+      </div>
+
       <button onClick={onClear} className="w-full py-1.5 text-xs font-semibold text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-500/30 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-500/10 transition-colors" data-testid="clear-resume-filters">
         Clear All Filters
       </button>
@@ -408,7 +476,16 @@ const FilterPanel = ({ filters, setFilters, allTags, onClear }) => {
 };
 
 // ─── Main Component ───────────────────────────────────────────────────────────
-const EMPTY_FILTERS = { search: '', tags: [], dateUpdated: 'All', defaultOnly: false };
+const EMPTY_FILTERS = { 
+  search: '', 
+  tags: [], 
+  dateUpdated: 'All', 
+  defaultOnly: false,
+  atsScoreMin: 0,
+  atsScoreMax: 100,
+  usageMin: 0,
+  fileFormat: 'All'
+};
 
 const ResumeLab = () => {
   const { user } = useAuth();
@@ -420,6 +497,8 @@ const ResumeLab = () => {
   const [deleteConfirm, setDeleteConfirm] = useState(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [defaultId, setDefaultId] = useState(mockResumes.find(r => r.isDefault)?.id);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
   // Dynamic tags from actual resume data
   const allTags = useMemo(() => [...new Set(mockResumes.flatMap(r => r.tags))].sort(), []);
@@ -429,6 +508,9 @@ const ResumeLab = () => {
       if (filters.search && !r.name.toLowerCase().includes(filters.search.toLowerCase()) && !r.friendlyName.toLowerCase().includes(filters.search.toLowerCase())) return false;
       if (filters.tags.length > 0 && !filters.tags.some(t => r.tags.includes(t))) return false;
       if (filters.defaultOnly && r.id !== defaultId) return false;
+      if (r.atsScore < filters.atsScoreMin || r.atsScore > filters.atsScoreMax) return false;
+      if (r.usedInApplications < filters.usageMin) return false;
+      if (filters.fileFormat !== 'All' && r.format !== filters.fileFormat) return false;
       return true;
     });
     if (sortBy === 'ATS Score') res = [...res].sort((a, b) => b.atsScore - a.atsScore);
@@ -436,6 +518,13 @@ const ResumeLab = () => {
     if (sortBy === 'Most Used') res = [...res].sort((a, b) => b.usedInApplications - a.usedInApplications);
     return res;
   }, [filters, sortBy, defaultId]);
+
+  // Pagination
+  const totalPages = Math.ceil(filteredResumes.length / itemsPerPage);
+  const paginatedResumes = useMemo(() => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    return filteredResumes.slice(startIndex, startIndex + itemsPerPage);
+  }, [filteredResumes, currentPage, itemsPerPage]);
 
   const totalApps = mockApplications.length;
   const bestATS = Math.max(...mockResumes.map(r => r.atsScore));
@@ -446,6 +535,9 @@ const ResumeLab = () => {
     filters.search, ...filters.tags,
     filters.dateUpdated !== 'All' && filters.dateUpdated,
     filters.defaultOnly && 'default',
+    (filters.atsScoreMin > 0 || filters.atsScoreMax < 100) && 'ats',
+    filters.usageMin > 0 && 'usage',
+    filters.fileFormat !== 'All' && 'format',
   ].filter(Boolean).length;
 
   return (
@@ -617,7 +709,7 @@ const ResumeLab = () => {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-zinc-100 dark:divide-zinc-800">
-                    {filteredResumes.map((resume, idx) => {
+                    {paginatedResumes.map((resume, idx) => {
                       const isDefault = resume.id === defaultId;
                       return (
                         <motion.tr
@@ -751,11 +843,21 @@ const ResumeLab = () => {
                   <button onClick={() => setFilters(EMPTY_FILTERS)} className="mt-2 text-xs text-blue-600 dark:text-blue-400 hover:underline">Clear filters</button>
                 </div>
               )}
+              {/* Pagination */}
+              {filteredResumes.length > 0 && (
+                <Pagination
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  onPageChange={setCurrentPage}
+                  itemsPerPage={itemsPerPage}
+                  totalItems={filteredResumes.length}
+                />
+              )}
             </div>
 
             {/* ─── Mobile Card List ─────────────────────── */}
             <div className="sm:hidden space-y-3">
-              {filteredResumes.map((resume, idx) => {
+              {paginatedResumes.map((resume, idx) => {
                 const isDefault = resume.id === defaultId;
                 return (
                   <motion.div
