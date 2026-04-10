@@ -284,34 +284,40 @@ export const mockRecruiters = [
 
 export const mockResumes = [
   {
-    id: 1, name: 'Java_Senior_Developer_v3.pdf', updated: '2 days ago', isDefault: true,
+    id: 1, name: 'Java_Senior_Developer_v3.pdf', friendlyName: 'Senior Java — Microservices Focus',
+    updated: '2 days ago', isDefault: true,
     tags: ['Java', 'Spring Boot', 'AWS', 'Microservices', 'Docker', 'REST API', 'Kafka', 'Redis', 'PostgreSQL', 'CI/CD', 'Agile', 'JUnit', 'Maven', 'Git', 'Linux', 'MongoDB'],
-    atsScore: 95, completeness: 92, format: 'PDF', size: '245 KB'
+    atsScore: 95, completeness: 92, format: 'PDF', size: '245 KB', usedInApplications: 2
   },
   {
-    id: 2, name: 'React_Frontend_v2.pdf', updated: '1 week ago', isDefault: false,
+    id: 2, name: 'React_Frontend_v2.pdf', friendlyName: 'React + TypeScript — Fintech Ready',
+    updated: '1 week ago', isDefault: false,
     tags: ['React', 'TypeScript', 'Redux', 'Node.js', 'GraphQL', 'CSS', 'Webpack', 'Jest', 'Cypress', 'Figma'],
-    atsScore: 88, completeness: 85, format: 'PDF', size: '198 KB'
+    atsScore: 88, completeness: 85, format: 'PDF', size: '198 KB', usedInApplications: 1
   },
   {
-    id: 3, name: 'DevOps_Engineer_v1.pdf', updated: '2 weeks ago', isDefault: false,
+    id: 3, name: 'DevOps_Engineer_v1.pdf', friendlyName: 'DevOps — Kubernetes & CI/CD',
+    updated: '2 weeks ago', isDefault: false,
     tags: ['AWS', 'Kubernetes', 'Terraform', 'Jenkins', 'Docker', 'Python', 'Ansible', 'Prometheus', 'Grafana', 'Linux', 'Bash', 'CloudFormation'],
-    atsScore: 92, completeness: 88, format: 'PDF', size: '210 KB'
+    atsScore: 92, completeness: 88, format: 'PDF', size: '210 KB', usedInApplications: 1
   },
   {
-    id: 4, name: 'Full_Stack_Developer.pdf', updated: '1 month ago', isDefault: false,
+    id: 4, name: 'Full_Stack_Developer.pdf', friendlyName: 'Full Stack Java + React',
+    updated: '1 month ago', isDefault: false,
     tags: ['Java', 'React', 'Spring Boot', 'PostgreSQL', 'Docker', 'AWS'],
-    atsScore: 85, completeness: 78, format: 'PDF', size: '180 KB'
+    atsScore: 85, completeness: 78, format: 'PDF', size: '180 KB', usedInApplications: 2
   },
   {
-    id: 5, name: 'Data_Engineer_v2.pdf', updated: '1 month ago', isDefault: false,
+    id: 5, name: 'Data_Engineer_v2.pdf', friendlyName: 'Data Engineering — Python & Spark',
+    updated: '1 month ago', isDefault: false,
     tags: ['Python', 'Spark', 'Airflow', 'AWS', 'SQL', 'Kafka', 'Redshift', 'dbt', 'Snowflake'],
-    atsScore: 90, completeness: 82, format: 'PDF', size: '225 KB'
+    atsScore: 90, completeness: 82, format: 'PDF', size: '225 KB', usedInApplications: 1
   },
   {
-    id: 6, name: 'Cloud_Architect_v1.pdf', updated: '3 days ago', isDefault: false,
+    id: 6, name: 'Cloud_Architect_v1.pdf', friendlyName: 'Cloud Architect — Multi-Cloud',
+    updated: '3 days ago', isDefault: false,
     tags: ['AWS', 'Azure', 'GCP', 'Terraform', 'Docker', 'Kubernetes', 'Python', 'CloudFormation', 'Lambda', 'VPC', 'IAM', 'S3', 'EC2', 'RDS', 'DynamoDB', 'SQS', 'SNS'],
-    atsScore: 94, completeness: 90, format: 'PDF', size: '260 KB'
+    atsScore: 94, completeness: 90, format: 'PDF', size: '260 KB', usedInApplications: 1
   }
 ];
 
