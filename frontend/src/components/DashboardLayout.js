@@ -55,7 +55,6 @@ const NAV = {
     { name: 'Jobs Explorer',  icon: Briefcase,      path: '/bench/jobs'          },
     { name: 'Resume Lab',     icon: FileText,       path: '/bench/resume'        },
     { name: 'Outreach',       icon: EnvelopeSimple, path: '/bench/outreach'      },
-    { name: 'My Submissions', icon: Target,         path: '/bench/submissions'   },
     { name: 'Recruiters',     icon: UsersThree,     path: '/bench/recruiters'    },
     { name: 'My Profile',     icon: User,           path: '/bench/profile'       },
     { name: 'Settings',       icon: Gear,           path: '/bench/settings'      },
@@ -153,10 +152,6 @@ export const DashboardLayout = ({ children, userType }) => {
               <>
                 <item.icon size={18} weight={isActive ? 'fill' : 'regular'} />
                 <span className="text-sm font-medium">{item.name}</span>
-                {/* "My Submissions" badge indicator for bench candidates */}
-                {item.path === '/bench/submissions' && !isActive && (
-                  <span className="ml-auto w-2 h-2 rounded-full bg-violet-500" />
-                )}
               </>
             )}
           </NavLink>

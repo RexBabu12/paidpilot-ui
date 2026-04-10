@@ -22,7 +22,6 @@ import OutreachAutomation from './pages/business/OutreachAutomation';
 import Analytics from './pages/business/Analytics';
 import BusinessTeam from './pages/business/BusinessTeam';
 import BusinessSettings from './pages/business/BusinessSettings';
-import MySubmissions from './pages/candidate/MySubmissions';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminLeads from './pages/admin/AdminLeads';
 import AdminCustomers from './pages/admin/AdminCustomers';
@@ -114,11 +113,6 @@ function App() {
               <Route path="/bench/outreach" element={
                 <ProtectedRoute allowedTypes={['bench']}>
                   <Applications />
-                </ProtectedRoute>
-              } />
-              <Route path="/bench/submissions" element={
-                <ProtectedRoute allowedTypes={['bench']}>
-                  <MySubmissions />
                 </ProtectedRoute>
               } />
               <Route path="/bench/recruiters" element={
