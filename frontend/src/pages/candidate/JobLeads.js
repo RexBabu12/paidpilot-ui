@@ -1,10 +1,11 @@
 import React, { useState, useMemo } from 'react';
 import { DashboardLayout } from '../../components/DashboardLayout';
 import { useAuth } from '../../contexts/AuthContext';
+import { Pagination } from '../../components/Pagination';
 import {
   MagnifyingGlass, Funnel, ArrowSquareOut, EnvelopeSimple,
   Clock, MapPin, CurrencyDollar, Eye, X, LinkedinLogo,
-  Briefcase, SlidersHorizontal, CaretLeft, CaretRight, Tag
+  Briefcase, SlidersHorizontal, Tag
 } from '@phosphor-icons/react';
 import { mockJobs } from '../../data/mockData';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -633,47 +634,16 @@ const JobLeads = () => {
               )}
             </div>
 
-            {/* ── Pagination ──────────────────────────────────── */}
+            {/* Pagination */}
             {totalPages > 1 && (
-              <div className="flex items-center justify-between mt-4 px-1" data-testid="pagination">
-                <p className="text-xs text-zinc-500 dark:text-zinc-400">
-                  Showing <span className="font-semibold text-zinc-700 dark:text-zinc-300">{(page - 1) * ITEMS_PER_PAGE + 1}–{Math.min(page * ITEMS_PER_PAGE, filteredJobs.length)}</span> of{' '}
-                  <span className="font-semibold text-zinc-700 dark:text-zinc-300">{filteredJobs.length}</span> results
-                </p>
-                <div className="flex items-center gap-1">
-                  <button
-                    onClick={() => setPage(p => Math.max(1, p - 1))}
-                    disabled={page === 1}
-                    className="p-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
-                    data-testid="pagination-prev"
-                  >
-                    <CaretLeft size={14} weight="bold" />
-                  </button>
-
-                  {Array.from({ length: totalPages }, (_, i) => i + 1).map(p => (
-                    <button
-                      key={p}
-                      onClick={() => setPage(p)}
-                      className={`w-8 h-8 text-xs font-semibold rounded-lg border transition-colors ${
-                        page === p
-                          ? 'bg-blue-600 text-white border-blue-600'
-                          : 'border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800'
-                      }`}
-                      data-testid={`pagination-page-${p}`}
-                    >
-                      {p}
-                    </button>
-                  ))}
-
-                  <button
-                    onClick={() => setPage(p => Math.min(totalPages, p + 1))}
-                    disabled={page === totalPages}
-                    className="p-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
-                    data-testid="pagination-next"
-                  >
-                    <CaretRight size={14} weight="bold" />
-                  </button>
-                </div>
+              <div className="bg-white dark:bg-[#18181b] border border-zinc-200 dark:border-zinc-800 rounded-xl overflow-hidden mt-4">
+                <Pagination
+                  currentPage={page}
+                  totalPages={totalPages}
+                  onPageChange={setPage}
+                  itemsPerPage={ITEMS_PER_PAGE}
+                  totalItems={filteredJobs.length}
+                />
               </div>
             )}
           </div>

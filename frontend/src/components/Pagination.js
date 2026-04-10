@@ -43,18 +43,9 @@ export const Pagination = ({
   if (totalPages <= 1) return null;
 
   return (
-    <div className="flex items-center justify-between px-4 py-3 border-t border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#18181b]">
-      {/* Items info */}
-      <div className="hidden sm:block">
-        <p className="text-sm text-zinc-700 dark:text-zinc-300">
-          Showing <span className="font-medium">{startItem}</span> to{' '}
-          <span className="font-medium">{endItem}</span> of{' '}
-          <span className="font-medium">{totalItems}</span> results
-        </p>
-      </div>
-
-      {/* Page numbers */}
-      <div className="flex items-center gap-2 mx-auto sm:mx-0">
+    <div className="flex items-center justify-center px-4 py-3 border-t border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#18181b]">
+      {/* Page numbers - centered */}
+      <div className="flex items-center gap-2">
         <button
           onClick={() => onPageChange(currentPage - 1)}
           disabled={currentPage === 1}
@@ -94,13 +85,6 @@ export const Pagination = ({
         >
           <CaretRight size={16} weight="bold" />
         </button>
-      </div>
-
-      {/* Mobile items info */}
-      <div className="sm:hidden">
-        <p className="text-xs text-zinc-600 dark:text-zinc-400">
-          {currentPage} / {totalPages}
-        </p>
       </div>
     </div>
   );
