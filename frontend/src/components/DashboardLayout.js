@@ -3,7 +3,8 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import {
   SquaresFour, Briefcase, UsersThree, ChartBar, EnvelopeSimple,
   FileText, Gear, SignOut, List, X, User, Buildings, Robot,
-  Database, Target, Crown, UserCircle, ShieldCheck, CaretLeft, CaretRight
+  Database, Target, Crown, UserCircle, ShieldCheck, CaretLeft, CaretRight,
+  Sparkle, EnvelopeOpen, Desktop
 } from '@phosphor-icons/react';
 import { useAuth } from '../contexts/AuthContext';
 import { ThemeToggle } from './ThemeToggle';
@@ -28,6 +29,11 @@ const NAV = {
     { name: 'Recruiters',   icon: UsersThree,     path: '/candidate/recruiters'   },
     { name: 'Profile',      icon: User,           path: '/candidate/profile'      },
     { name: 'Settings',     icon: Gear,           path: '/candidate/settings'     },
+    { name: '─── Future ───', isDivider: true },
+    { name: 'Auto Apply',   icon: Robot,          path: '/candidate/auto-apply-dice',  badge: 'Soon' },
+    { name: 'Vendor Portals', icon: Buildings,    path: '/candidate/vendor-portals',   badge: 'Soon' },
+    { name: 'Mail Agent',   icon: EnvelopeOpen,   path: '/candidate/mail-agent',       badge: 'Soon' },
+    { name: 'Desktop App',  icon: Desktop,        path: '/candidate/desktop-app',      badge: 'Soon' },
   ],
   business_owner: [
     { name: 'Dashboard',    icon: SquaresFour,   path: '/business/dashboard'   },
@@ -39,6 +45,11 @@ const NAV = {
     { name: 'Analytics',    icon: ChartBar,       path: '/business/analytics'   },
     { name: 'Team',         icon: Buildings,      path: '/business/team', ownerOnly: true },
     { name: 'Settings',     icon: Gear,           path: '/business/settings'    },
+    { name: '─── Future ───', isDivider: true },
+    { name: 'Auto Apply',   icon: Robot,          path: '/business/auto-apply-dice',  badge: 'Soon' },
+    { name: 'Vendor Portals', icon: Buildings,    path: '/business/vendor-portals',   badge: 'Soon' },
+    { name: 'Mail Agent',   icon: EnvelopeOpen,   path: '/business/mail-agent',       badge: 'Soon' },
+    { name: 'Desktop App',  icon: Desktop,        path: '/business/desktop-app',      badge: 'Soon' },
   ],
   business_recruiter: [
     { name: 'Dashboard',    icon: SquaresFour,   path: '/business/dashboard'   },
@@ -49,6 +60,11 @@ const NAV = {
     { name: 'Resume Lab',   icon: FileText,       path: '/business/resumes'     },
     { name: 'Analytics',    icon: ChartBar,       path: '/business/analytics'   },
     { name: 'Settings',     icon: Gear,           path: '/business/settings'    },
+    { name: '─── Future ───', isDivider: true },
+    { name: 'Auto Apply',   icon: Robot,          path: '/business/auto-apply-dice',  badge: 'Soon' },
+    { name: 'Vendor Portals', icon: Buildings,    path: '/business/vendor-portals',   badge: 'Soon' },
+    { name: 'Mail Agent',   icon: EnvelopeOpen,   path: '/business/mail-agent',       badge: 'Soon' },
+    { name: 'Desktop App',  icon: Desktop,        path: '/business/desktop-app',      badge: 'Soon' },
   ],
   bench: [
     { name: 'My Dashboard',   icon: SquaresFour,   path: '/bench/dashboard'     },
@@ -58,6 +74,11 @@ const NAV = {
     { name: 'Recruiters',     icon: UsersThree,     path: '/bench/recruiters'    },
     { name: 'My Profile',     icon: User,           path: '/bench/profile'       },
     { name: 'Settings',       icon: Gear,           path: '/bench/settings'      },
+    { name: '─── Future ───', isDivider: true },
+    { name: 'Auto Apply',   icon: Robot,          path: '/bench/auto-apply-dice',  badge: 'Soon' },
+    { name: 'Vendor Portals', icon: Buildings,    path: '/bench/vendor-portals',   badge: 'Soon' },
+    { name: 'Mail Agent',   icon: EnvelopeOpen,   path: '/bench/mail-agent',       badge: 'Soon' },
+    { name: 'Desktop App',  icon: Desktop,        path: '/bench/desktop-app',      badge: 'Soon' },
   ],
   admin: [
     { name: 'Dashboard',      icon: SquaresFour,   path: '/admin/dashboard'  },
@@ -69,6 +90,8 @@ const NAV = {
     { name: 'Scraper Control',icon: Robot,          path: '/admin/scraper'    },
     { name: 'System Info',    icon: Database,       path: '/admin/system'     },
     { name: 'Settings',       icon: Gear,           path: '/admin/settings'   },
+    { name: '─── Future ───', isDivider: true },
+    { name: 'Desktop App',  icon: Desktop,        path: '/admin/desktop-app',      badge: 'Soon' },
   ],
 };
 
@@ -155,29 +178,56 @@ export const DashboardLayout = ({ children, userType }) => {
             }
             return true;
           })
-          .map((item) => (
-          <NavLink
-            key={item.path}
-            to={item.path}
-            onClick={() => setSidebarOpen(false)}
-            data-testid={`nav-${item.name.toLowerCase().replace(/\s+/g, '-')}`}
-            className={({ isActive }) =>
-              `flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-150 group ${
-                isActive
-                  ? 'bg-blue-600 text-white dark:bg-blue-500 shadow-sm'
-                  : 'text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-900 dark:hover:text-zinc-50'
-              }`
+          .map((item, idx) => {
+            // Render divider
+            if (item.isDivider) {
+              return (
+                <div key={`divider-${idx}`} className={`flex items-center gap-2 px-3 py-2 ${sidebarCollapsed ? 'justify-center' : ''}`}>
+                  {!sidebarCollapsed && (
+                    <span className="text-[10px] font-bold text-zinc-400 dark:text-zinc-600 uppercase tracking-wider">
+                      {item.name}
+                    </span>
+                  )}
+                  {sidebarCollapsed && (
+                    <div className="w-full h-px bg-zinc-200 dark:bg-zinc-800" />
+                  )}
+                </div>
+              );
             }
-            title={sidebarCollapsed ? item.name : ''}
-          >
-            {({ isActive }) => (
-              <>
-                <item.icon size={18} weight={isActive ? 'fill' : 'regular'} className="flex-shrink-0" />
-                <span className={`text-sm font-medium ${sidebarCollapsed ? 'hidden' : 'block'}`}>{item.name}</span>
-              </>
-            )}
-          </NavLink>
-        ))}
+
+            return (
+              <NavLink
+                key={item.path}
+                to={item.path}
+                onClick={() => setSidebarOpen(false)}
+                data-testid={`nav-${item.name.toLowerCase().replace(/\s+/g, '-')}`}
+                className={({ isActive }) =>
+                  `flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-150 group relative ${
+                    isActive
+                      ? 'bg-blue-600 text-white dark:bg-blue-500 shadow-sm'
+                      : 'text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-900 dark:hover:text-zinc-50'
+                  }`
+                }
+                title={sidebarCollapsed ? item.name : ''}
+              >
+                {({ isActive }) => (
+                  <>
+                    <item.icon size={18} weight={isActive ? 'fill' : 'regular'} className="flex-shrink-0" />
+                    <span className={`text-sm font-medium ${sidebarCollapsed ? 'hidden' : 'block'} flex-1`}>{item.name}</span>
+                    {item.badge && !sidebarCollapsed && (
+                      <span className="px-1.5 py-0.5 text-[9px] font-bold bg-purple-500 text-white rounded">
+                        {item.badge}
+                      </span>
+                    )}
+                    {item.badge && sidebarCollapsed && (
+                      <span className="absolute -top-1 -right-1 w-2 h-2 bg-purple-500 rounded-full" />
+                    )}
+                  </>
+                )}
+              </NavLink>
+            );
+          }
+        )}
       </nav>
 
       {/* User section */}

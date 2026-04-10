@@ -31,6 +31,10 @@ import AdminCandidates from './pages/admin/AdminCandidates';
 import AdminScraperControl from './pages/admin/AdminScraperControl';
 import AdminSystemInfo from './pages/admin/AdminSystemInfo';
 import AdminSettings from './pages/admin/AdminSettings';
+import AutoApplyDice from './pages/common/AutoApplyDice';
+import CustomVendorPortals from './pages/common/CustomVendorPortals';
+import MailAgent from './pages/common/MailAgent';
+import DesktopApp from './pages/common/DesktopApp';
 
 // Protected Route Component
 const ProtectedRoute = ({ children, allowedTypes }) => {
@@ -94,6 +98,28 @@ function App() {
                 </ProtectedRoute>
               } />
               
+              {/* Candidate Future Features */}
+              <Route path="/candidate/auto-apply-dice" element={
+                <ProtectedRoute allowedTypes={['candidate']}>
+                  <AutoApplyDice />
+                </ProtectedRoute>
+              } />
+              <Route path="/candidate/vendor-portals" element={
+                <ProtectedRoute allowedTypes={['candidate']}>
+                  <CustomVendorPortals />
+                </ProtectedRoute>
+              } />
+              <Route path="/candidate/mail-agent" element={
+                <ProtectedRoute allowedTypes={['candidate']}>
+                  <MailAgent />
+                </ProtectedRoute>
+              } />
+              <Route path="/candidate/desktop-app" element={
+                <ProtectedRoute allowedTypes={['candidate']}>
+                  <DesktopApp />
+                </ProtectedRoute>
+              } />
+              
               {/* Bench Candidate Routes */}
               <Route path="/bench/dashboard" element={
                 <ProtectedRoute allowedTypes={['bench']}>
@@ -128,6 +154,28 @@ function App() {
               <Route path="/bench/settings" element={
                 <ProtectedRoute allowedTypes={['bench']}>
                   <CandidateSettings />
+                </ProtectedRoute>
+              } />
+              
+              {/* Bench Future Features */}
+              <Route path="/bench/auto-apply-dice" element={
+                <ProtectedRoute allowedTypes={['bench']}>
+                  <AutoApplyDice />
+                </ProtectedRoute>
+              } />
+              <Route path="/bench/vendor-portals" element={
+                <ProtectedRoute allowedTypes={['bench']}>
+                  <CustomVendorPortals />
+                </ProtectedRoute>
+              } />
+              <Route path="/bench/mail-agent" element={
+                <ProtectedRoute allowedTypes={['bench']}>
+                  <MailAgent />
+                </ProtectedRoute>
+              } />
+              <Route path="/bench/desktop-app" element={
+                <ProtectedRoute allowedTypes={['bench']}>
+                  <DesktopApp />
                 </ProtectedRoute>
               } />
               
@@ -178,6 +226,28 @@ function App() {
                 </ProtectedRoute>
               } />
               
+              {/* Business Future Features */}
+              <Route path="/business/auto-apply-dice" element={
+                <ProtectedRoute allowedTypes={['business']}>
+                  <AutoApplyDice />
+                </ProtectedRoute>
+              } />
+              <Route path="/business/vendor-portals" element={
+                <ProtectedRoute allowedTypes={['business']}>
+                  <CustomVendorPortals />
+                </ProtectedRoute>
+              } />
+              <Route path="/business/mail-agent" element={
+                <ProtectedRoute allowedTypes={['business']}>
+                  <MailAgent />
+                </ProtectedRoute>
+              } />
+              <Route path="/business/desktop-app" element={
+                <ProtectedRoute allowedTypes={['business']}>
+                  <DesktopApp />
+                </ProtectedRoute>
+              } />
+              
               {/* Admin Routes */}
               <Route path="/admin/dashboard" element={
                 <ProtectedRoute allowedTypes={['admin']}>
@@ -222,6 +292,13 @@ function App() {
               <Route path="/admin/settings" element={
                 <ProtectedRoute allowedTypes={['admin']}>
                   <AdminSettings />
+                </ProtectedRoute>
+              } />
+              
+              {/* Admin Future Features */}
+              <Route path="/admin/desktop-app" element={
+                <ProtectedRoute allowedTypes={['admin']}>
+                  <DesktopApp />
                 </ProtectedRoute>
               } />
             </Routes>
