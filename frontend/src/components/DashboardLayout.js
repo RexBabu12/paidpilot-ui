@@ -4,7 +4,7 @@ import {
   SquaresFour, Briefcase, UsersThree, ChartBar, EnvelopeSimple,
   FileText, Gear, SignOut, List, X, User, Buildings, Robot,
   Database, Target, Crown, UserCircle, ShieldCheck, CaretLeft, CaretRight,
-  Sparkle, EnvelopeOpen, Desktop
+  Sparkle, EnvelopeOpen, Desktop, MagicWand
 } from '@phosphor-icons/react';
 import { useAuth } from '../contexts/AuthContext';
 import { ThemeToggle } from './ThemeToggle';
@@ -25,9 +25,11 @@ const NAV = {
     { name: 'Dashboard',    icon: SquaresFour,   path: '/candidate/dashboard'    },
     { name: 'Jobs Explorer',icon: Briefcase,      path: '/candidate/jobs'         },
     { name: 'Resume Lab',   icon: FileText,       path: '/candidate/resume'       },
+    { name: 'Resume Generator', icon: MagicWand,  path: '/candidate/resume-generator' },
     { name: 'Applications', icon: EnvelopeSimple, path: '/candidate/applications' },
     { name: 'Recruiters',   icon: UsersThree,     path: '/candidate/recruiters'   },
     { name: 'Profile',      icon: User,           path: '/candidate/profile'      },
+    { name: 'Subscription', icon: Crown,          path: '/candidate/subscription' },
     { name: 'Settings',     icon: Gear,           path: '/candidate/settings'     },
     { name: '─── Future ───', isDivider: true },
     { name: 'Auto Apply',   icon: Robot,          path: '/candidate/auto-apply-dice',  badge: 'Soon' },
@@ -42,8 +44,10 @@ const NAV = {
     { name: 'Outreach',     icon: EnvelopeSimple, path: '/business/outreach'    },
     { name: 'Recruiters',   icon: UsersThree,     path: '/business/recruiters'  },
     { name: 'Resume Lab',   icon: FileText,       path: '/business/resumes'     },
+    { name: 'Resume Generator', icon: MagicWand,  path: '/business/resume-generator' },
     { name: 'Analytics',    icon: ChartBar,       path: '/business/analytics'   },
     { name: 'Team',         icon: Buildings,      path: '/business/team', ownerOnly: true },
+    { name: 'Subscription', icon: Crown,          path: '/business/subscription' },
     { name: 'Settings',     icon: Gear,           path: '/business/settings'    },
     { name: '─── Future ───', isDivider: true },
     { name: 'Auto Apply',   icon: Robot,          path: '/business/auto-apply-dice',  badge: 'Soon' },
@@ -58,6 +62,7 @@ const NAV = {
     { name: 'Outreach',     icon: EnvelopeSimple, path: '/business/outreach'    },
     { name: 'Recruiters',   icon: UsersThree,     path: '/business/recruiters'  },
     { name: 'Resume Lab',   icon: FileText,       path: '/business/resumes'     },
+    { name: 'Resume Generator', icon: MagicWand,  path: '/business/resume-generator' },
     { name: 'Analytics',    icon: ChartBar,       path: '/business/analytics'   },
     { name: 'Settings',     icon: Gear,           path: '/business/settings'    },
     { name: '─── Future ───', isDivider: true },
@@ -70,9 +75,11 @@ const NAV = {
     { name: 'My Dashboard',   icon: SquaresFour,   path: '/bench/dashboard'     },
     { name: 'Jobs Explorer',  icon: Briefcase,      path: '/bench/jobs'          },
     { name: 'Resume Lab',     icon: FileText,       path: '/bench/resume'        },
+    { name: 'Resume Generator', icon: MagicWand,   path: '/bench/resume-generator' },
     { name: 'Outreach',       icon: EnvelopeSimple, path: '/bench/outreach'      },
     { name: 'Recruiters',     icon: UsersThree,     path: '/bench/recruiters'    },
     { name: 'My Profile',     icon: User,           path: '/bench/profile'       },
+    { name: 'Subscription',   icon: Crown,          path: '/bench/subscription'  },
     { name: 'Settings',       icon: Gear,           path: '/bench/settings'      },
     { name: '─── Future ───', isDivider: true },
     { name: 'Auto Apply',   icon: Robot,          path: '/bench/auto-apply-dice',  badge: 'Soon' },

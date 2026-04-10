@@ -35,6 +35,9 @@ import AutoApplyDice from './pages/common/AutoApplyDice';
 import CustomVendorPortals from './pages/common/CustomVendorPortals';
 import MailAgent from './pages/common/MailAgent';
 import DesktopApp from './pages/common/DesktopApp';
+import SubscriptionPage from './pages/common/SubscriptionPage';
+import ResumeGenerator from './pages/candidate/ResumeGenerator';
+import BusinessResumeGenerator from './pages/business/BusinessResumeGenerator';
 import LandingPage from './pages/marketing/LandingPage';
 import PricingPage from './pages/marketing/PricingPage';
 import AboutPage from './pages/marketing/AboutPage';
@@ -107,6 +110,16 @@ function App() {
               <Route path="/candidate/settings" element={
                 <ProtectedRoute allowedTypes={['candidate']}>
                   <CandidateSettings />
+                </ProtectedRoute>
+              } />
+              <Route path="/candidate/subscription" element={
+                <ProtectedRoute allowedTypes={['candidate']}>
+                  <SubscriptionPage />
+                </ProtectedRoute>
+              } />
+              <Route path="/candidate/resume-generator" element={
+                <ProtectedRoute allowedTypes={['candidate']}>
+                  <ResumeGenerator />
                 </ProtectedRoute>
               } />
               
@@ -235,6 +248,16 @@ function App() {
               <Route path="/business/settings" element={
                 <ProtectedRoute allowedTypes={['business']}>
                   <BusinessSettings />
+                </ProtectedRoute>
+              } />
+              <Route path="/business/subscription" element={
+                <ProtectedRoute allowedTypes={['business']}>
+                  <SubscriptionPage />
+                </ProtectedRoute>
+              } />
+              <Route path="/business/resume-generator" element={
+                <ProtectedRoute allowedTypes={['business']}>
+                  <BusinessResumeGenerator />
                 </ProtectedRoute>
               } />
               
