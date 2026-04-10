@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import {
   SquaresFour, Briefcase, UsersThree, ChartBar, EnvelopeSimple,
   FileText, Gear, SignOut, List, X, User, Buildings, Robot,
-  Database, Target, Crown, UserCircle, ShieldCheck
+  Database, Target, Crown, UserCircle, ShieldCheck, CaretLeft, CaretRight
 } from '@phosphor-icons/react';
 import { useAuth } from '../contexts/AuthContext';
 import { ThemeToggle } from './ThemeToggle';
@@ -89,8 +89,16 @@ const RoleIcon = ({ role }) => {
 
 export const DashboardLayout = ({ children, userType }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(() => {
+    const saved = localStorage.getItem('sidebarCollapsed');
+    return saved ? JSON.parse(saved) : false;
+  });
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    localStorage.setItem('sidebarCollapsed', JSON.stringify(sidebarCollapsed));
+  }, [sidebarCollapsed]);
 
   // Resolve effective portal type and nav from user context
   const effectiveType = (() => {
@@ -112,16 +120,29 @@ export const DashboardLayout = ({ children, userType }) => {
   const Sidebar = () => (
     <div className="flex flex-col h-full">
       {/* Logo */}
-      <div className="p-5 border-b border-zinc-200 dark:border-zinc-800">
-        <h1 className="font-outfit font-bold text-xl text-zinc-900 dark:text-zinc-50">PaidPilot</h1>
-        <p className="text-[11px] text-zinc-500 dark:text-zinc-400 mt-0.5 uppercase tracking-wider">{portalLabel}</p>
-        {/* Company badge for business/bench */}
-        {user?.company && (
-          <div className="mt-2 flex items-center gap-1.5">
-            <Buildings size={11} className="text-zinc-400" />
-            <span className="text-[11px] text-zinc-500 dark:text-zinc-400 font-medium truncate">{user.company}</span>
-          </div>
+      <div className="p-5 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between">
+        <div className={`${sidebarCollapsed ? 'hidden' : 'block'}`}>
+          <h1 className="font-outfit font-bold text-xl text-zinc-900 dark:text-zinc-50">PaidPilot</h1>
+          <p className="text-[11px] text-zinc-500 dark:text-zinc-400 mt-0.5 uppercase tracking-wider">{portalLabel}</p>
+          {/* Company badge for business/bench */}
+          {user?.company && (
+            <div className="mt-2 flex items-center gap-1.5">
+              <Buildings size={11} className="text-zinc-400" />
+              <span className="text-[11px] text-zinc-500 dark:text-zinc-400 font-medium truncate">{user.company}</span>
+            </div>
+          )}
+        </div>
+        {sidebarCollapsed && (
+          <h1 className="font-outfit font-bold text-xl text-blue-600 dark:text-blue-400">PP</h1>
         )}
+        {/* Desktop collapse toggle */}
+        <button
+          onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
+          className="hidden lg:flex items-center justify-center w-6 h-6 rounded hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-500 dark:text-zinc-400 transition-colors"
+          aria-label="Toggle sidebar"
+        >
+          {sidebarCollapsed ? <CaretRight size={14} weight="bold" /> : <CaretLeft size={14} weight="bold" />}
+        </button>
       </div>
 
       {/* Navigation */}
@@ -147,11 +168,12 @@ export const DashboardLayout = ({ children, userType }) => {
                   : 'text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-900 dark:hover:text-zinc-50'
               }`
             }
+            title={sidebarCollapsed ? item.name : ''}
           >
             {({ isActive }) => (
               <>
-                <item.icon size={18} weight={isActive ? 'fill' : 'regular'} />
-                <span className="text-sm font-medium">{item.name}</span>
+                <item.icon size={18} weight={isActive ? 'fill' : 'regular'} className="flex-shrink-0" />
+                <span className={`text-sm font-medium ${sidebarCollapsed ? 'hidden' : 'block'}`}>{item.name}</span>
               </>
             )}
           </NavLink>
@@ -201,7 +223,7 @@ export const DashboardLayout = ({ children, userType }) => {
       </div>
 
       {/* Desktop sidebar */}
-      <div className="hidden lg:fixed lg:inset-y-0 lg:left-0 lg:z-40 lg:w-60 xl:w-64 lg:flex flex-col bg-white dark:bg-[#18181b] border-r border-zinc-200 dark:border-zinc-800">
+      <div className={`hidden lg:fixed lg:inset-y-0 lg:left-0 lg:z-40 ${sidebarCollapsed ? 'lg:w-16' : 'lg:w-60 xl:w-64'} lg:flex flex-col bg-white dark:bg-[#18181b] border-r border-zinc-200 dark:border-zinc-800 transition-all duration-300`}>
         <Sidebar />
       </div>
 
@@ -226,7 +248,7 @@ export const DashboardLayout = ({ children, userType }) => {
       </AnimatePresence>
 
       {/* Main content */}
-      <div className="lg:pl-60 xl:pl-64">
+      <div className={`${sidebarCollapsed ? 'lg:pl-16' : 'lg:pl-60 xl:pl-64'} transition-all duration-300`}>
         {/* Top bar */}
         <div className="hidden lg:flex items-center justify-between px-8 py-3.5 bg-white/80 dark:bg-[#18181b]/80 backdrop-blur-xl border-b border-zinc-200 dark:border-zinc-800 sticky top-0 z-30">
           <div className="flex items-center gap-3">
