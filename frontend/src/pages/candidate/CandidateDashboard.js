@@ -5,8 +5,9 @@ import {
   FileText, Clock, ArrowUp, ArrowRight,
   MagnifyingGlass, Scissors, ListChecks, Robot
 } from '@phosphor-icons/react';
-import { mockJobs, mockApplications, mockRecruiters } from '../../data/mockData';
+import { mockJobs, mockApplications, mockRecruiters, mockBenchSubmissions } from '../../data/mockData';
 import { motion } from 'framer-motion';
+import { useAuth } from '../../contexts/AuthContext';
 
 const StatBlock = ({ title, value, sub, icon: Icon, color, iconBg, delay }) => (
   <motion.div
@@ -49,6 +50,8 @@ const WeeklyBarChart = ({ data }) => {
 };
 
 const CandidateDashboard = () => {
+  const { user } = useAuth();
+  const isBenchCandidate = user?.role === 'bench_candidate';
   const recentJobs = mockJobs.slice(0, 6);
 
   const weeklyApplications = [
@@ -95,7 +98,7 @@ const CandidateDashboard = () => {
   ];
 
   return (
-    <DashboardLayout userType="candidate">
+    <DashboardLayout userType={user?.type || 'candidate'}>
       <div className="max-w-7xl mx-auto" data-testid="candidate-dashboard">
 
         {/* Header */}
@@ -135,7 +138,7 @@ const CandidateDashboard = () => {
         </motion.div>
 
         {/* KPI Stats */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        <div className={`grid grid-cols-2 ${isBenchCandidate ? 'lg:grid-cols-5' : 'lg:grid-cols-4'} gap-4 mb-6`}>
           <StatBlock
             title="LinkedIn Jobs Scraped"
             value="127"
@@ -172,6 +175,18 @@ const CandidateDashboard = () => {
             color="text-purple-600 dark:text-purple-400"
             delay={0.15}
           />
+          {/* Bench Candidate Extra KPI */}
+          {isBenchCandidate && (
+            <StatBlock
+              title="Submitted by Recruiter"
+              value={mockBenchSubmissions.length.toString()}
+              sub={`${user?.assignedRecruiter || 'Your Recruiter'}`}
+              icon={Robot}
+              iconBg="bg-violet-100 dark:bg-violet-500/10"
+              color="text-violet-600 dark:text-violet-400"
+              delay={0.18}
+            />
+          )}
         </div>
 
         {/* Source Breakdown Row */}
@@ -466,6 +481,58 @@ const CandidateDashboard = () => {
                 ))}
               </div>
             </motion.div>
+
+            {/* Bench Candidate: Recruiter Activity Widget */}
+            {isBenchCandidate && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.42 }}
+                className="bg-gradient-to-br from-violet-50 to-violet-100 dark:from-violet-950/40 dark:to-violet-900/20 border border-violet-200 dark:border-violet-800 rounded-xl p-5"
+                data-testid="recruiter-activity"
+              >
+                <div className="flex items-center gap-2 mb-4">
+                  <Robot size={18} className="text-violet-600 dark:text-violet-400" weight="duotone" />
+                  <h2 className="text-base font-outfit font-semibold text-violet-900 dark:text-violet-50">Recruiter Activity</h2>
+                </div>
+                <div className="space-y-3">
+                  <div className="bg-white/60 dark:bg-zinc-900/40 rounded-lg p-3">
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-xs font-medium text-violet-700 dark:text-violet-300">Assigned Recruiter</span>
+                    </div>
+                    <p className="text-sm font-bold text-violet-900 dark:text-violet-100">{user?.assignedRecruiter || 'Not Assigned'}</p>
+                  </div>
+                  <div className="bg-white/60 dark:bg-zinc-900/40 rounded-lg p-3">
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-xs font-medium text-violet-700 dark:text-violet-300">Total Submissions</span>
+                    </div>
+                    <p className="text-2xl font-bold text-violet-900 dark:text-violet-100">{mockBenchSubmissions.length}</p>
+                    <p className="text-[10px] text-violet-600 dark:text-violet-400 mt-0.5">
+                      Last submitted: {new Date(mockBenchSubmissions[0]?.submittedDate || Date.now()).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                    </p>
+                  </div>
+                  <div className="bg-white/60 dark:bg-zinc-900/40 rounded-lg p-3">
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-xs font-medium text-violet-700 dark:text-violet-300">This Week</span>
+                    </div>
+                    <p className="text-2xl font-bold text-violet-900 dark:text-violet-100">
+                      {mockBenchSubmissions.filter(s => {
+                        const oneWeekAgo = new Date();
+                        oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+                        return new Date(s.submittedDate) >= oneWeekAgo;
+                      }).length}
+                    </p>
+                    <p className="text-[10px] text-violet-600 dark:text-violet-400 mt-0.5">Applications sent by recruiter</p>
+                  </div>
+                </div>
+                <a 
+                  href="/bench/submissions" 
+                  className="block mt-4 text-center text-xs font-medium text-violet-700 dark:text-violet-300 hover:text-violet-900 dark:hover:text-violet-100 transition-colors"
+                >
+                  View All Submissions →
+                </a>
+              </motion.div>
+            )}
 
           </div>
         </div>

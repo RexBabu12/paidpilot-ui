@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { DashboardLayout } from '../../components/DashboardLayout';
-import { User, MapPin, Phone, EnvelopeSimple, LinkedinLogo, Briefcase, Clock, CurrencyDollar, FileText, GlobeHemisphereWest, Upload, Pencil, Check } from '@phosphor-icons/react';
+import { User, MapPin, Phone, EnvelopeSimple, LinkedinLogo, Briefcase, Clock, CurrencyDollar, FileText, GlobeHemisphereWest, Upload, Pencil, Check, UsersThree } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../components/ui/tabs';
+import { useAuth } from '../../contexts/AuthContext';
 
 const CandidateProfile = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -43,7 +44,7 @@ const CandidateProfile = () => {
   };
 
   return (
-    <DashboardLayout userType="candidate">
+    <DashboardLayout userType={user?.type || 'candidate'}>
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -196,6 +197,26 @@ const CandidateProfile = () => {
                     className="w-full px-4 py-2.5 bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg text-zinc-900 dark:text-zinc-50 focus:outline-none focus:ring-2 focus:ring-blue-600 disabled:opacity-60"
                   />
                 </div>
+
+                {/* Assigned Recruiter (Bench Candidate Only) */}
+                {isBenchCandidate && (
+                  <div className="md:col-span-2">
+                    <label className="block text-sm font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 mb-2">
+                      <UsersThree size={16} className="inline mr-1" /> Assigned Recruiter
+                    </label>
+                    <div className="w-full px-4 py-2.5 bg-violet-50 dark:bg-violet-950/30 border-2 border-violet-200 dark:border-violet-800 rounded-lg flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-full bg-violet-600 flex items-center justify-center text-white font-bold text-xs">
+                        {user?.assignedRecruiter?.split(' ').map(n => n[0]).join('') || 'N/A'}
+                      </div>
+                      <span className="text-sm font-medium text-violet-900 dark:text-violet-100">
+                        {user?.assignedRecruiter || 'Not Assigned'}
+                      </span>
+                    </div>
+                    <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1">
+                      Your assigned recruiter manages your job submissions
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
           </TabsContent>

@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { DashboardLayout } from '../../components/DashboardLayout';
+import { useAuth } from '../../contexts/AuthContext';
 import {
   MagnifyingGlass, Funnel, ArrowSquareOut, EnvelopeSimple,
   Clock, MapPin, CurrencyDollar, Eye, X, LinkedinLogo,
@@ -365,6 +366,7 @@ const EMPTY_FILTERS = {
 };
 
 const JobLeads = () => {
+  const { user } = useAuth();
   const [filters, setFilters] = useState(EMPTY_FILTERS);
   const [detailJob, setDetailJob] = useState(null);
   const [page, setPage] = useState(1);
@@ -404,7 +406,7 @@ const JobLeads = () => {
   ].filter(Boolean).length;
 
   return (
-    <DashboardLayout userType="candidate">
+    <DashboardLayout userType={user?.type || "candidate"}>
       <div className="max-w-[1600px] mx-auto" data-testid="jobs-explorer-page">
         {/* Page Header */}
         <motion.div initial={{ opacity: 0, y: -16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }} className="mb-5">

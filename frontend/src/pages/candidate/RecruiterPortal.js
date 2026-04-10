@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { DashboardLayout } from '../../components/DashboardLayout';
+import { useAuth } from '../../contexts/AuthContext';
 import { mockRecruiters, mockEmailTemplates } from '../../data/mockData';
 import { EnvelopeSimple, Phone, LinkedinLogo, MagnifyingGlass, Robot, X, PaperPlaneTilt } from '@phosphor-icons/react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const RecruiterPortal = () => {
+  const { user } = useAuth();
   const [searchTerm, setSearchTerm] = useState('');
   const [hoveredRow, setHoveredRow] = useState(null);
   const [emailPreview, setEmailPreview] = useState(null);
@@ -33,7 +35,7 @@ const RecruiterPortal = () => {
   };
 
   return (
-    <DashboardLayout userType="candidate">
+    <DashboardLayout userType={user?.type || "candidate"}>
       <div className="max-w-[1600px] mx-auto" data-testid="recruiter-portal-page">
         <motion.div
           initial={{ opacity: 0, y: -20 }}

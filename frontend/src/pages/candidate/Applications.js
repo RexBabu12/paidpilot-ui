@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { DashboardLayout } from '../../components/DashboardLayout';
+import { useAuth } from '../../contexts/AuthContext';
 import {
   MagnifyingGlass, Funnel, Download, EnvelopeSimple,
   LinkedinLogo, Briefcase, Rows, SquaresFour, ArrowRight
@@ -32,6 +33,7 @@ const TypeBadge = ({ type }) => (
 );
 
 const Applications = () => {
+  const { user } = useAuth();
   const [searchTerm, setSearchTerm] = useState('');
   const [viewMode, setViewMode] = useState('table');
   const [filters, setFilters] = useState({
@@ -75,7 +77,7 @@ const Applications = () => {
   const diceCount = mockApplications.filter(a => a.source === 'Dice').length;
 
   return (
-    <DashboardLayout userType="candidate">
+    <DashboardLayout userType={user?.type || "candidate"}>
       <div className="max-w-[1600px] mx-auto" data-testid="applications-page">
         <motion.div
           initial={{ opacity: 0, y: -20 }}

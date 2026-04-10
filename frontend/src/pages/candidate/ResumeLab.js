@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { DashboardLayout } from '../../components/DashboardLayout';
+import { useAuth } from '../../contexts/AuthContext';
 import { mockResumes, mockApplications, mockJobs } from '../../data/mockData';
 import {
   FileText, Download, Upload, Pencil, Trash, Star, StarHalf,
@@ -410,6 +411,7 @@ const FilterPanel = ({ filters, setFilters, allTags, onClear }) => {
 const EMPTY_FILTERS = { search: '', tags: [], dateUpdated: 'All', defaultOnly: false };
 
 const ResumeLab = () => {
+  const { user } = useAuth();
   const [filters, setFilters] = useState(EMPTY_FILTERS);
   const [sortBy, setSortBy] = useState('Recently Updated');
   const [previewResume, setPreviewResume] = useState(null);
@@ -447,7 +449,7 @@ const ResumeLab = () => {
   ].filter(Boolean).length;
 
   return (
-    <DashboardLayout userType="candidate">
+    <DashboardLayout userType={user?.type || "candidate"}>
       <div className="max-w-[1600px] mx-auto" data-testid="resume-lab-page">
 
         {/* Page Header */}

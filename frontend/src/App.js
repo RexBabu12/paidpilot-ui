@@ -22,6 +22,7 @@ import OutreachAutomation from './pages/business/OutreachAutomation';
 import Analytics from './pages/business/Analytics';
 import BusinessTeam from './pages/business/BusinessTeam';
 import BusinessSettings from './pages/business/BusinessSettings';
+import MySubmissions from './pages/candidate/MySubmissions';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminLeads from './pages/admin/AdminLeads';
 import AdminCustomers from './pages/admin/AdminCustomers';
@@ -90,6 +91,48 @@ function App() {
               } />
               <Route path="/candidate/settings" element={
                 <ProtectedRoute allowedTypes={['candidate']}>
+                  <CandidateSettings />
+                </ProtectedRoute>
+              } />
+              
+              {/* Bench Candidate Routes */}
+              <Route path="/bench/dashboard" element={
+                <ProtectedRoute allowedTypes={['bench']}>
+                  <CandidateDashboard />
+                </ProtectedRoute>
+              } />
+              <Route path="/bench/jobs" element={
+                <ProtectedRoute allowedTypes={['bench']}>
+                  <JobLeads />
+                </ProtectedRoute>
+              } />
+              <Route path="/bench/resume" element={
+                <ProtectedRoute allowedTypes={['bench']}>
+                  <ResumeLab />
+                </ProtectedRoute>
+              } />
+              <Route path="/bench/outreach" element={
+                <ProtectedRoute allowedTypes={['bench']}>
+                  <Applications />
+                </ProtectedRoute>
+              } />
+              <Route path="/bench/submissions" element={
+                <ProtectedRoute allowedTypes={['bench']}>
+                  <MySubmissions />
+                </ProtectedRoute>
+              } />
+              <Route path="/bench/recruiters" element={
+                <ProtectedRoute allowedTypes={['bench']}>
+                  <RecruiterPortal />
+                </ProtectedRoute>
+              } />
+              <Route path="/bench/profile" element={
+                <ProtectedRoute allowedTypes={['bench']}>
+                  <CandidateProfile />
+                </ProtectedRoute>
+              } />
+              <Route path="/bench/settings" element={
+                <ProtectedRoute allowedTypes={['bench']}>
                   <CandidateSettings />
                 </ProtectedRoute>
               } />

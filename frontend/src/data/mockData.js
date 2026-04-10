@@ -1032,7 +1032,15 @@ export const mockOutreachLogs = [
   { id: 15, candidate: 'Lisa Wang',       job: 'SF Dev — CRM Corp',               recruiter: 'Michael Chen',      actor: 'Nina Patel',   timestamp: '2025-01-31T10:00:00Z', status: 'Bounced', is_followup: false },
 ];
 
-// Per-candidate bench stats (emailsSent, followupsSent, bouncedCount, lastActivityDate)
+// ─── Bench Candidate Submissions (read-only — recruiter-sent) ────────────────
+export const mockBenchSubmissions = [
+  { id: 1, jobTitle: 'Senior Java Developer',  company: 'TechCorp Solutions',    location: 'Dallas, TX',       rate: '$85/hr',  type: 'C2C', submittedBy: 'Amy Roberts',  submittedDate: '2025-02-09', resumeUsed: 'Java_Senior_Developer_v3.pdf',  status: 'Sent'    },
+  { id: 2, jobTitle: 'Java Backend Engineer',   company: 'FinServ Corp',          location: 'Remote',           rate: '$90/hr',  type: 'C2C', submittedBy: 'Amy Roberts',  submittedDate: '2025-02-08', resumeUsed: 'Java_Senior_Developer_v3.pdf',  status: 'Sent'    },
+  { id: 3, jobTitle: 'Backend API Developer',   company: 'CloudScale Inc',        location: 'Austin, TX',       rate: '$82/hr',  type: 'C2C', submittedBy: 'James Liu',    submittedDate: '2025-02-07', resumeUsed: 'Java_Senior_Developer_v3.pdf',  status: 'Bounced' },
+  { id: 4, jobTitle: 'Java Architect',          company: 'DataStream Analytics',  location: 'Remote',           rate: '$110/hr', type: 'C2C', submittedBy: 'Amy Roberts',  submittedDate: '2025-02-05', resumeUsed: 'Java_Senior_Developer_v3.pdf',  status: 'Sent'    },
+  { id: 5, jobTitle: 'Sr. Software Engineer',   company: 'MegaCorp Technologies', location: 'Chicago, IL',      rate: '$88/hr',  type: 'Both',submittedBy: 'James Liu',    submittedDate: '2025-02-03', resumeUsed: 'Full_Stack_Developer.pdf',      status: 'Sent'    },
+  { id: 6, jobTitle: 'Full Stack Developer',    company: 'StartupXYZ',            location: 'Remote',           rate: '$80/hr',  type: 'W2',  submittedBy: 'Nina Patel',   submittedDate: '2025-01-31', resumeUsed: 'Full_Stack_Developer.pdf',      status: 'Sent'    },
+];
 export const mockBenchStats = [
   { candidateId: 1, name: 'Rajesh Kumar',   emailsSent: 18, followupsSent: 5, bouncedCount: 1, lastActivityDate: '2025-02-09' },
   { candidateId: 2, name: 'Maria Garcia',   emailsSent: 12, followupsSent: 3, bouncedCount: 0, lastActivityDate: '2025-02-09' },
