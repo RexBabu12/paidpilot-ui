@@ -38,6 +38,7 @@ const navigationByType = {
     { name: 'Candidates', icon: User, path: '/business/candidates' },
     { name: 'Recruiters', icon: UsersThree, path: '/business/recruiters' },
     { name: 'Outreach', icon: EnvelopeSimple, path: '/business/outreach' },
+    { name: 'Resume Lab', icon: FileText, path: '/business/resumes' },
     { name: 'Analytics', icon: ChartBar, path: '/business/analytics' },
     { name: 'Team', icon: Buildings, path: '/business/team' },
     { name: 'Settings', icon: Gear, path: '/business/settings' }

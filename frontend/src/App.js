@@ -13,6 +13,7 @@ import RecruiterPortal from './pages/candidate/RecruiterPortal';
 import Applications from './pages/candidate/Applications';
 import CandidateProfile from './pages/candidate/CandidateProfile';
 import CandidateSettings from './pages/candidate/CandidateSettings';
+import BusinessResumeLab from './pages/business/BusinessResumeLab';
 import BusinessDashboard from './pages/business/BusinessDashboard';
 import BusinessLeads from './pages/business/BusinessLeads';
 import BusinessRecruiters from './pages/business/BusinessRecruiters';
@@ -127,6 +128,11 @@ function App() {
               <Route path="/business/team" element={
                 <ProtectedRoute allowedTypes={['business']}>
                   <BusinessTeam />
+                </ProtectedRoute>
+              } />
+              <Route path="/business/resumes" element={
+                <ProtectedRoute allowedTypes={['business']}>
+                  <BusinessResumeLab />
                 </ProtectedRoute>
               } />
               <Route path="/business/settings" element={
