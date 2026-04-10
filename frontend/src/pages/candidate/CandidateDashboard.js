@@ -1,13 +1,14 @@
 import React from 'react';
 import { DashboardLayout } from '../../components/DashboardLayout';
 import {
-  Briefcase, Target, EnvelopeSimple, ChartLineUp, Eye,
-  FileText, Clock, ArrowUp, ArrowDown, TrendUp
+  LinkedinLogo, Briefcase, EnvelopeSimple,
+  FileText, Clock, ArrowUp, ArrowRight,
+  MagnifyingGlass, Scissors, ListChecks, Robot
 } from '@phosphor-icons/react';
-import { mockJobs, mockApplications } from '../../data/mockData';
+import { mockJobs, mockApplications, mockRecruiters } from '../../data/mockData';
 import { motion } from 'framer-motion';
 
-const StatBlock = ({ title, value, change, trend, icon: Icon, color, delay }) => (
+const StatBlock = ({ title, value, sub, icon: Icon, color, iconBg, delay }) => (
   <motion.div
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
@@ -16,34 +17,30 @@ const StatBlock = ({ title, value, change, trend, icon: Icon, color, delay }) =>
     data-testid={`stat-${title.toLowerCase().replace(/\s+/g, '-')}`}
   >
     <div className="flex items-center justify-between mb-3">
-      <div className={`w-10 h-10 rounded-lg ${color} flex items-center justify-center`}>
-        <Icon size={20} weight="duotone" className="text-white" />
+      <div className={`w-10 h-10 rounded-lg ${iconBg} flex items-center justify-center`}>
+        <Icon size={20} weight="duotone" className={color} />
       </div>
-      {change && (
-        <span className={`flex items-center gap-0.5 text-xs font-medium ${trend === 'up' ? 'text-emerald-500' : 'text-red-500'}`}>
-          {trend === 'up' ? <ArrowUp size={12} weight="bold" /> : <ArrowDown size={12} weight="bold" />}
-          {change}
-        </span>
-      )}
     </div>
     <p className="text-2xl font-bold text-zinc-900 dark:text-zinc-50 mb-0.5">{value}</p>
-    <p className="text-xs text-zinc-500 dark:text-zinc-400">{title}</p>
+    <p className="text-xs font-medium text-zinc-700 dark:text-zinc-300">{title}</p>
+    {sub && <p className="text-[11px] text-zinc-400 dark:text-zinc-500 mt-0.5">{sub}</p>}
   </motion.div>
 );
 
-const MiniBarChart = ({ data, label }) => {
+const WeeklyBarChart = ({ data }) => {
   const max = Math.max(...data.map(d => d.value));
   return (
     <div>
-      <p className="text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 mb-3">{label}</p>
-      <div className="flex items-end gap-1.5 h-20">
+      <div className="flex items-end gap-2 h-28">
         {data.map((d, i) => (
           <div key={i} className="flex-1 flex flex-col items-center gap-1">
+            <span className="text-[10px] font-semibold text-zinc-500 dark:text-zinc-400 mb-1">{d.value}</span>
             <div
               className="w-full bg-blue-500 dark:bg-blue-400 rounded-t transition-all duration-500"
-              style={{ height: `${(d.value / max) * 100}%`, minHeight: '4px' }}
+              style={{ height: `${Math.max((d.value / max) * 80, 4)}px` }}
+              title={`${d.value} sent`}
             />
-            <span className="text-[9px] text-zinc-500 dark:text-zinc-400">{d.label}</span>
+            <span className="text-[10px] text-zinc-500 dark:text-zinc-400 mt-1">{d.label}</span>
           </div>
         ))}
       </div>
@@ -52,9 +49,9 @@ const MiniBarChart = ({ data, label }) => {
 };
 
 const CandidateDashboard = () => {
-  const recentJobs = mockJobs.slice(0, 4);
+  const recentJobs = mockJobs.slice(0, 6);
 
-  const weeklyActivity = [
+  const weeklyApplications = [
     { label: 'Mon', value: 5 },
     { label: 'Tue', value: 8 },
     { label: 'Wed', value: 3 },
@@ -64,104 +61,234 @@ const CandidateDashboard = () => {
     { label: 'Sun', value: 1 }
   ];
 
-  const applicationStatus = [
-    { label: 'Sent', value: 12, color: 'bg-blue-500' },
-    { label: 'Viewed', value: 8, color: 'bg-amber-500' },
-    { label: 'Replied', value: 5, color: 'bg-emerald-500' },
-    { label: 'Interview', value: 2, color: 'bg-purple-500' }
-  ];
+  const totalSent = weeklyApplications.reduce((s, d) => s + d.value, 0);
 
+  // Only mail sent + resume tailored
   const recentActivity = [
-    { action: 'Resume tailored', detail: 'for Senior Java Developer at TechCorp', time: '2 hours ago', type: 'resume' },
-    { action: 'Application sent', detail: 'to CloudScale Inc for DevOps Engineer', time: '5 hours ago', type: 'sent' },
-    { action: 'Profile viewed by recruiter', detail: 'Sarah Johnson viewed your profile', time: '1 day ago', type: 'view' },
-    { action: 'New job match found', detail: 'Python Data Engineer - $95/hr Remote', time: '1 day ago', type: 'match' },
-    { action: 'Follow-up reminder', detail: 'Digital Innovations - React Frontend', time: '2 days ago', type: 'reminder' }
+    { action: 'Email sent', detail: 'to Sarah Johnson — Senior Java Developer at TechCorp', time: '2 hours ago', type: 'email' },
+    { action: 'Resume tailored', detail: 'Java_Senior_v3 for DevOps Engineer at CloudScale', time: '4 hours ago', type: 'resume' },
+    { action: 'Email sent', detail: 'to Jennifer Martinez — DevOps Engineer at CloudScale Inc', time: '5 hours ago', type: 'email' },
+    { action: 'Resume tailored', detail: 'React_Frontend_v2 for React Engineer at Digital Innovations', time: '1 day ago', type: 'resume' },
+    { action: 'Email sent', detail: 'to Michael Chen — React Frontend Engineer at Digital Innovations', time: '1 day ago', type: 'email' },
+    { action: 'Resume tailored', detail: 'Cloud_Architect_v1 for Cloud Architect at MegaCorp', time: '2 days ago', type: 'resume' },
   ];
 
-  const activityIcons = {
-    resume: <FileText size={16} className="text-blue-500" weight="duotone" />,
-    sent: <EnvelopeSimple size={16} className="text-emerald-500" weight="duotone" />,
-    view: <Eye size={16} className="text-amber-500" weight="duotone" />,
-    match: <Target size={16} className="text-purple-500" weight="duotone" />,
-    reminder: <Clock size={16} className="text-red-500" weight="duotone" />
-  };
+  // Jobs scraped by skill (chart data)
+  const skillsData = [
+    { skill: 'Java', count: 234, pct: 100 },
+    { skill: 'Python', count: 189, pct: 81 },
+    { skill: 'React', count: 167, pct: 71 },
+    { skill: 'AWS', count: 156, pct: 67 },
+    { skill: 'DevOps', count: 142, pct: 61 },
+    { skill: '.NET', count: 118, pct: 50 },
+    { skill: 'Kubernetes', count: 97, pct: 41 },
+  ];
+
+  // Top active recruiters this week
+  const topRecruiters = mockRecruiters.slice(0, 4);
+
+  const quickActions = [
+    { label: 'Browse Jobs', icon: MagnifyingGlass, href: '/candidate/jobs', color: 'text-blue-600 dark:text-blue-400', bg: 'bg-blue-50 dark:bg-blue-500/10 hover:bg-blue-100 dark:hover:bg-blue-500/20' },
+    { label: 'Tailor Resume', icon: Scissors, href: '/candidate/resume', color: 'text-purple-600 dark:text-purple-400', bg: 'bg-purple-50 dark:bg-purple-500/10 hover:bg-purple-100 dark:hover:bg-purple-500/20' },
+    { label: 'Applications', icon: ListChecks, href: '/candidate/applications', color: 'text-emerald-600 dark:text-emerald-400', bg: 'bg-emerald-50 dark:bg-emerald-500/10 hover:bg-emerald-100 dark:hover:bg-emerald-500/20' },
+    { label: 'Auto-Outreach', icon: Robot, href: '/candidate/recruiters', color: 'text-amber-600 dark:text-amber-400', bg: 'bg-amber-50 dark:bg-amber-500/10 hover:bg-amber-100 dark:hover:bg-amber-500/20' },
+  ];
 
   return (
     <DashboardLayout userType="candidate">
       <div className="max-w-7xl mx-auto" data-testid="candidate-dashboard">
+
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="mb-8"
+          className="mb-6"
         >
-          <h1 className="text-4xl sm:text-5xl font-outfit font-semibold text-zinc-900 dark:text-zinc-50 mb-2">
+          <h1 className="text-3xl sm:text-4xl font-outfit font-semibold text-zinc-900 dark:text-zinc-50 mb-1">
             Dashboard
           </h1>
-          <p className="text-zinc-600 dark:text-zinc-400">
-            Your job search overview at a glance.
+          <p className="text-sm text-zinc-500 dark:text-zinc-400">
+            Today's job intelligence and outreach overview.
           </p>
         </motion.div>
 
+        {/* Quick Actions */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.05 }}
+          className="grid grid-cols-4 gap-3 mb-6"
+          data-testid="quick-actions"
+        >
+          {quickActions.map((action, idx) => (
+            <a
+              key={idx}
+              href={action.href}
+              className={`flex items-center gap-3 px-4 py-3 rounded-xl border border-zinc-200 dark:border-zinc-800 transition-colors duration-200 cursor-pointer ${action.bg}`}
+              data-testid={`quick-action-${action.label.toLowerCase().replace(/\s+/g, '-')}`}
+            >
+              <action.icon size={18} weight="duotone" className={action.color} />
+              <span className={`text-sm font-medium ${action.color}`}>{action.label}</span>
+            </a>
+          ))}
+        </motion.div>
+
         {/* KPI Stats */}
-        <div className="grid grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
-          <StatBlock title="Jobs Scraped Today" value="127" change="+12%" trend="up" icon={Briefcase} color="bg-blue-600" delay={0} />
-          <StatBlock title="Matching Jobs" value="34" change="+8%" trend="up" icon={Target} color="bg-purple-600" delay={0.05} />
-          <StatBlock title="Applications Sent" value="18" change="+22%" trend="up" icon={EnvelopeSimple} color="bg-emerald-600" delay={0.1} />
-          <StatBlock title="Response Rate" value="28%" change="+3%" trend="up" icon={ChartLineUp} color="bg-amber-600" delay={0.15} />
-          <StatBlock title="Profile Views" value="45" change="+15%" trend="up" icon={Eye} color="bg-rose-600" delay={0.2} />
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+          <StatBlock
+            title="LinkedIn Jobs Scraped"
+            value="127"
+            sub="Today · 843 this week"
+            icon={LinkedinLogo}
+            iconBg="bg-blue-100 dark:bg-blue-500/10"
+            color="text-blue-600 dark:text-blue-400"
+            delay={0}
+          />
+          <StatBlock
+            title="Dice Jobs Available"
+            value="43"
+            sub="Today · 289 this week"
+            icon={Briefcase}
+            iconBg="bg-orange-100 dark:bg-orange-500/10"
+            color="text-orange-600 dark:text-orange-400"
+            delay={0.05}
+          />
+          <StatBlock
+            title="Applications Sent"
+            value="18"
+            sub="This week · 38 this month"
+            icon={EnvelopeSimple}
+            iconBg="bg-emerald-100 dark:bg-emerald-500/10"
+            color="text-emerald-600 dark:text-emerald-400"
+            delay={0.1}
+          />
+          <StatBlock
+            title="Resumes Tailored"
+            value="6"
+            sub="This week · 23 this month"
+            icon={FileText}
+            iconBg="bg-purple-100 dark:bg-purple-500/10"
+            color="text-purple-600 dark:text-purple-400"
+            delay={0.15}
+          />
         </div>
 
-        {/* Main Content - Two columns */}
+        {/* Source Breakdown Row */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6">
+          {/* LinkedIn Breakdown */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.2 }}
+            className="bg-white dark:bg-[#18181b] border border-zinc-200 dark:border-zinc-800 rounded-xl p-5"
+            data-testid="linkedin-breakdown"
+          >
+            <div className="flex items-center gap-2 mb-4">
+              <LinkedinLogo size={18} className="text-blue-600 dark:text-blue-400" weight="fill" />
+              <h2 className="text-sm font-outfit font-semibold text-zinc-900 dark:text-zinc-50">LinkedIn Scraping</h2>
+            </div>
+            <div className="grid grid-cols-3 gap-3">
+              {[
+                { label: 'Job Posts', value: '87', sub: 'today' },
+                { label: 'Group Posts', value: '40', sub: 'today' },
+                { label: 'Total This Week', value: '843', sub: 'this week' },
+              ].map((item, i) => (
+                <div key={i} className="bg-zinc-50 dark:bg-zinc-800/50 rounded-lg p-3 text-center">
+                  <p className="text-xl font-bold text-zinc-900 dark:text-zinc-50">{item.value}</p>
+                  <p className="text-xs font-medium text-zinc-600 dark:text-zinc-400">{item.label}</p>
+                  <p className="text-[10px] text-zinc-400 dark:text-zinc-500">{item.sub}</p>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Dice Breakdown */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.22 }}
+            className="bg-white dark:bg-[#18181b] border border-zinc-200 dark:border-zinc-800 rounded-xl p-5"
+            data-testid="dice-breakdown"
+          >
+            <div className="flex items-center gap-2 mb-4">
+              <Briefcase size={18} className="text-orange-500 dark:text-orange-400" weight="duotone" />
+              <h2 className="text-sm font-outfit font-semibold text-zinc-900 dark:text-zinc-50">Dice Scraping</h2>
+            </div>
+            <div className="grid grid-cols-3 gap-3">
+              {[
+                { label: 'New Listings', value: '43', sub: 'today' },
+                { label: 'Qualified', value: '31', sub: 'today' },
+                { label: 'Total This Week', value: '289', sub: 'this week' },
+              ].map((item, i) => (
+                <div key={i} className="bg-zinc-50 dark:bg-zinc-800/50 rounded-lg p-3 text-center">
+                  <p className="text-xl font-bold text-zinc-900 dark:text-zinc-50">{item.value}</p>
+                  <p className="text-xs font-medium text-zinc-600 dark:text-zinc-400">{item.label}</p>
+                  <p className="text-[10px] text-zinc-400 dark:text-zinc-500">{item.sub}</p>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Main Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
           {/* Left Column - 2/3 */}
           <div className="lg:col-span-2 space-y-6">
-            {/* Application Pipeline */}
+
+            {/* Weekly Applications Sent */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.25 }}
               className="bg-white dark:bg-[#18181b] border border-zinc-200 dark:border-zinc-800 rounded-xl p-5"
-              data-testid="application-pipeline"
+              data-testid="weekly-applications-chart"
             >
-              <h2 className="text-base font-outfit font-semibold text-zinc-900 dark:text-zinc-50 mb-4">Application Pipeline</h2>
-              <div className="grid grid-cols-4 gap-3">
-                {applicationStatus.map((status, idx) => {
-                  const total = applicationStatus.reduce((s, a) => s + a.value, 0);
-                  const pct = Math.round((status.value / total) * 100);
-                  return (
-                    <div key={idx} className="text-center" data-testid={`pipeline-${status.label.toLowerCase()}`}>
-                      <div className="relative w-16 h-16 mx-auto mb-2">
-                        <svg className="w-16 h-16 -rotate-90" viewBox="0 0 64 64">
-                          <circle cx="32" cy="32" r="28" fill="none" strokeWidth="5" className="stroke-zinc-100 dark:stroke-zinc-800" />
-                          <circle
-                            cx="32" cy="32" r="28" fill="none" strokeWidth="5"
-                            strokeDasharray={`${pct * 1.76} 176`}
-                            strokeLinecap="round"
-                            className={status.color.replace('bg-', 'stroke-')}
-                          />
-                        </svg>
-                        <span className="absolute inset-0 flex items-center justify-center text-sm font-bold text-zinc-900 dark:text-zinc-50">
-                          {status.value}
-                        </span>
-                      </div>
-                      <p className="text-xs text-zinc-600 dark:text-zinc-400">{status.label}</p>
-                    </div>
-                  );
-                })}
+              <div className="flex items-center justify-between mb-4">
+                <div>
+                  <h2 className="text-base font-outfit font-semibold text-zinc-900 dark:text-zinc-50">Applications Sent This Week</h2>
+                  <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">Daily outreach activity — {totalSent} total sent this week</p>
+                </div>
+                <span className="flex items-center gap-1 text-xs font-medium text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-500/10 px-2.5 py-1 rounded-full">
+                  <ArrowUp size={12} weight="bold" />
+                  +22% vs last week
+                </span>
               </div>
+              <WeeklyBarChart data={weeklyApplications} />
             </motion.div>
 
-            {/* Weekly Activity Chart */}
+            {/* Jobs Scraped by Skill */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.3 }}
               className="bg-white dark:bg-[#18181b] border border-zinc-200 dark:border-zinc-800 rounded-xl p-5"
-              data-testid="weekly-activity-chart"
+              data-testid="jobs-by-skill-chart"
             >
-              <MiniBarChart data={weeklyActivity} label="Weekly Activity (Applications)" />
+              <div className="flex items-center justify-between mb-4">
+                <div>
+                  <h2 className="text-base font-outfit font-semibold text-zinc-900 dark:text-zinc-50">Jobs Scraped by Skill</h2>
+                  <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">Total job count per top skill — all sources</p>
+                </div>
+              </div>
+              <div className="space-y-3">
+                {skillsData.map((item, idx) => (
+                  <div key={idx} className="flex items-center gap-3">
+                    <span className="text-sm text-zinc-700 dark:text-zinc-300 w-20 shrink-0">{item.skill}</span>
+                    <div className="flex-1 h-5 bg-zinc-100 dark:bg-zinc-800 rounded-md overflow-hidden">
+                      <motion.div
+                        initial={{ width: 0 }}
+                        animate={{ width: `${item.pct}%` }}
+                        transition={{ duration: 0.6, delay: 0.4 + idx * 0.06 }}
+                        className="h-full bg-blue-500 dark:bg-blue-400 rounded-md flex items-center justify-end pr-2"
+                      >
+                      </motion.div>
+                    </div>
+                    <span className="text-xs font-semibold text-zinc-600 dark:text-zinc-400 w-12 text-right">{item.count}</span>
+                  </div>
+                ))}
+              </div>
             </motion.div>
 
             {/* Latest Scraped Jobs */}
@@ -173,47 +300,71 @@ const CandidateDashboard = () => {
               data-testid="latest-scraped-jobs"
             >
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-base font-outfit font-semibold text-zinc-900 dark:text-zinc-50">Latest Scraped Jobs</h2>
-                <a href="/candidate/jobs" className="text-xs font-medium text-blue-600 dark:text-blue-400 hover:underline" data-testid="view-all-jobs-link">
-                  View All
+                <div>
+                  <h2 className="text-base font-outfit font-semibold text-zinc-900 dark:text-zinc-50">Latest Scraped Jobs</h2>
+                  <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">Most recently added across all sources</p>
+                </div>
+                <a href="/candidate/jobs" className="flex items-center gap-1 text-xs font-medium text-blue-600 dark:text-blue-400 hover:underline" data-testid="view-all-jobs-link">
+                  View All <ArrowRight size={12} weight="bold" />
                 </a>
               </div>
-              <div className="space-y-3">
-                {recentJobs.map((job) => (
-                  <div
-                    key={job.id}
-                    className="flex items-center justify-between py-2.5 border-b border-zinc-100 dark:border-zinc-800 last:border-0"
-                    data-testid={`dashboard-job-${job.id}`}
-                  >
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-zinc-900 dark:text-zinc-50 truncate">{job.role_title}</p>
-                      <div className="flex items-center gap-2 mt-0.5">
-                        <span className="text-xs text-zinc-500 dark:text-zinc-400">{job.author_company}</span>
-                        <span className="text-xs text-zinc-400">|</span>
-                        <span className="text-xs text-zinc-500 dark:text-zinc-400">{job.location}</span>
+              <div className="space-y-0">
+                {recentJobs.map((job, idx) => {
+                  // Format scraped_at to relative time
+                  const scrapedAt = new Date(job.scraped_at);
+                  const now = new Date('2025-02-09T12:00:00Z');
+                  const diffH = Math.round((now - scrapedAt) / 3600000);
+                  const timeAgo = diffH < 24 ? `${diffH}h ago` : `${Math.round(diffH / 24)}d ago`;
+
+                  return (
+                    <div
+                      key={job.id}
+                      className="flex items-center gap-4 py-3 border-b border-zinc-100 dark:border-zinc-800 last:border-0"
+                      data-testid={`dashboard-job-${job.id}`}
+                    >
+                      {/* Source badge */}
+                      <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${job.source === 'LinkedIn' ? 'bg-blue-50 dark:bg-blue-500/10' : 'bg-orange-50 dark:bg-orange-500/10'}`}>
+                        {job.source === 'LinkedIn'
+                          ? <LinkedinLogo size={16} weight="fill" className="text-blue-600 dark:text-blue-400" />
+                          : <Briefcase size={16} weight="duotone" className="text-orange-500 dark:text-orange-400" />
+                        }
+                      </div>
+
+                      {/* Job info */}
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium text-zinc-900 dark:text-zinc-50 truncate">{job.role_title}</p>
+                        <div className="flex items-center gap-2 mt-0.5">
+                          <span className="text-xs text-zinc-500 dark:text-zinc-400 truncate">{job.location}</span>
+                        </div>
+                      </div>
+
+                      {/* Badges */}
+                      <div className="flex items-center gap-2 shrink-0">
+                        <span className={`px-2 py-0.5 text-[10px] font-semibold rounded-md border ${
+                          job.engagement_type === 'C2C'
+                            ? 'bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border-emerald-200 dark:border-emerald-500/20'
+                            : job.engagement_type === 'W2'
+                            ? 'bg-blue-50 dark:bg-blue-500/10 text-blue-700 dark:text-blue-400 border-blue-200 dark:border-blue-500/20'
+                            : 'bg-amber-50 dark:bg-amber-500/10 text-amber-700 dark:text-amber-400 border-amber-200 dark:border-amber-500/20'
+                        }`}>{job.engagement_type}</span>
+                        <span className="text-sm font-bold text-zinc-900 dark:text-zinc-50 w-16 text-right">{job.rate_raw}</span>
+                        <span className="text-[11px] text-zinc-400 dark:text-zinc-500 w-12 text-right">{timeAgo}</span>
                       </div>
                     </div>
-                    <div className="flex items-center gap-3 ml-4">
-                      <span className={`px-2 py-0.5 text-[10px] font-medium rounded ${
-                        job.engagement_type === 'C2C' ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400' :
-                        job.engagement_type === 'W2' ? 'bg-blue-500/10 text-blue-600 dark:text-blue-400' :
-                        'bg-amber-500/10 text-amber-600 dark:text-amber-400'
-                      }`}>{job.engagement_type}</span>
-                      <span className="text-sm font-semibold text-zinc-900 dark:text-zinc-50">{job.rate_raw}</span>
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </motion.div>
           </div>
 
           {/* Right Column - 1/3 */}
           <div className="space-y-6">
+
             {/* Resume Health */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.3 }}
+              transition={{ duration: 0.4, delay: 0.28 }}
               className="bg-white dark:bg-[#18181b] border border-zinc-200 dark:border-zinc-800 rounded-xl p-5"
               data-testid="resume-health"
             >
@@ -236,29 +387,27 @@ const CandidateDashboard = () => {
                 </div>
               </div>
               <div className="space-y-2">
-                <div className="flex items-center justify-between text-sm">
-                  <span className="text-zinc-600 dark:text-zinc-400">Default Resume</span>
-                  <span className="font-medium text-zinc-900 dark:text-zinc-50">Java_Senior_v3</span>
-                </div>
-                <div className="flex items-center justify-between text-sm">
-                  <span className="text-zinc-600 dark:text-zinc-400">Total Versions</span>
-                  <span className="font-medium text-zinc-900 dark:text-zinc-50">6</span>
-                </div>
-                <div className="flex items-center justify-between text-sm">
-                  <span className="text-zinc-600 dark:text-zinc-400">Last Updated</span>
-                  <span className="font-medium text-zinc-900 dark:text-zinc-50">2 days ago</span>
-                </div>
+                {[
+                  { label: 'Default Resume', val: 'Java_Senior_v3' },
+                  { label: 'Total Versions', val: '6' },
+                  { label: 'Last Tailored', val: '2 hours ago' },
+                ].map((item, i) => (
+                  <div key={i} className="flex items-center justify-between text-sm">
+                    <span className="text-zinc-500 dark:text-zinc-400">{item.label}</span>
+                    <span className="font-medium text-zinc-900 dark:text-zinc-50 text-right">{item.val}</span>
+                  </div>
+                ))}
               </div>
               <a href="/candidate/resume" className="block mt-4 text-center text-xs font-medium text-blue-600 dark:text-blue-400 hover:underline" data-testid="go-to-resume-lab">
-                Go to Resume Lab
+                Go to Resume Lab →
               </a>
             </motion.div>
 
-            {/* Recent Activity */}
+            {/* Recent Activity - Mail + Resume only */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.35 }}
+              transition={{ duration: 0.4, delay: 0.33 }}
               className="bg-white dark:bg-[#18181b] border border-zinc-200 dark:border-zinc-800 rounded-xl p-5"
               data-testid="recent-activity"
             >
@@ -266,48 +415,58 @@ const CandidateDashboard = () => {
               <div className="space-y-3">
                 {recentActivity.map((activity, idx) => (
                   <div key={idx} className="flex items-start gap-3 pb-3 border-b border-zinc-100 dark:border-zinc-800 last:border-0 last:pb-0">
-                    <div className="w-8 h-8 rounded-lg bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center flex-shrink-0">
-                      {activityIcons[activity.type]}
+                    <div className={`w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 ${
+                      activity.type === 'email'
+                        ? 'bg-emerald-50 dark:bg-emerald-500/10'
+                        : 'bg-blue-50 dark:bg-blue-500/10'
+                    }`}>
+                      {activity.type === 'email'
+                        ? <EnvelopeSimple size={14} className="text-emerald-600 dark:text-emerald-400" weight="duotone" />
+                        : <FileText size={14} className="text-blue-600 dark:text-blue-400" weight="duotone" />
+                      }
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-zinc-900 dark:text-zinc-50">{activity.action}</p>
-                      <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5 truncate">{activity.detail}</p>
-                      <p className="text-[11px] text-zinc-400 dark:text-zinc-500 mt-0.5">{activity.time}</p>
+                      <p className="text-xs font-semibold text-zinc-800 dark:text-zinc-200">{activity.action}</p>
+                      <p className="text-[11px] text-zinc-500 dark:text-zinc-400 mt-0.5 leading-relaxed">{activity.detail}</p>
+                      <p className="text-[10px] text-zinc-400 dark:text-zinc-500 mt-0.5 flex items-center gap-1">
+                        <Clock size={10} /> {activity.time}
+                      </p>
                     </div>
                   </div>
                 ))}
               </div>
             </motion.div>
 
-            {/* Top Skills Match */}
+            {/* Top Active Recruiters This Week */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.4 }}
+              transition={{ duration: 0.4, delay: 0.38 }}
               className="bg-white dark:bg-[#18181b] border border-zinc-200 dark:border-zinc-800 rounded-xl p-5"
-              data-testid="top-skills-demand"
+              data-testid="top-recruiters"
             >
-              <h2 className="text-base font-outfit font-semibold text-zinc-900 dark:text-zinc-50 mb-4">Top Skills in Demand</h2>
-              <div className="space-y-2.5">
-                {[
-                  { skill: 'Java', count: 234, pct: 100 },
-                  { skill: 'Python', count: 189, pct: 81 },
-                  { skill: 'React', count: 167, pct: 71 },
-                  { skill: 'AWS', count: 156, pct: 67 },
-                  { skill: 'Kubernetes', count: 142, pct: 61 }
-                ].map((item, idx) => (
-                  <div key={idx}>
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="text-sm text-zinc-700 dark:text-zinc-300">{item.skill}</span>
-                      <span className="text-xs text-zinc-500 dark:text-zinc-400">{item.count} jobs</span>
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-base font-outfit font-semibold text-zinc-900 dark:text-zinc-50">Top Recruiters This Week</h2>
+                <a href="/candidate/recruiters" className="text-xs font-medium text-blue-600 dark:text-blue-400 hover:underline">
+                  All →
+                </a>
+              </div>
+              <div className="space-y-3">
+                {topRecruiters.map((recruiter, idx) => (
+                  <div key={idx} className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center shrink-0">
+                      <span className="text-xs font-bold text-white">{recruiter.name.split(' ').map(n => n[0]).join('').slice(0,2)}</span>
                     </div>
-                    <div className="h-1.5 bg-zinc-100 dark:bg-zinc-800 rounded-full overflow-hidden">
-                      <div className="h-full bg-blue-500 dark:bg-blue-400 rounded-full" style={{ width: `${item.pct}%` }} />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-xs font-medium text-zinc-900 dark:text-zinc-50 truncate">{recruiter.name}</p>
+                      <p className="text-[10px] text-zinc-500 dark:text-zinc-400 truncate">{recruiter.company}</p>
                     </div>
+                    <span className="text-[11px] font-semibold text-blue-600 dark:text-blue-400 shrink-0">{recruiter.totalPosts} posts</span>
                   </div>
                 ))}
               </div>
             </motion.div>
+
           </div>
         </div>
       </div>

@@ -120,7 +120,7 @@ backend:
 frontend:
   - task: "Login Page with multi-user authentication"
     implemented: true
-    working: "NA"
+    working: true
     file: "frontend/src/pages/Login.js"
     stuck_count: 0
     priority: "high"
@@ -129,10 +129,13 @@ frontend:
       - working: "NA"
         agent: "main"
         comment: "Login page implemented with mock auth. Credentials: candidate@demo.com/candidate123, business@demo.com/business123, admin@demo.com/admin123"
+      - working: true
+        agent: "testing"
+        comment: "Login flow tested successfully. 'Click to fill' for Candidate Portal works correctly, credentials auto-populate, and Sign In button navigates to /candidate/dashboard as expected."
 
   - task: "Candidate Portal - Dashboard, Jobs, Resume Lab, Applications, Recruiters, Profile, Settings"
     implemented: true
-    working: "NA"
+    working: true
     file: "frontend/src/pages/candidate/"
     stuck_count: 0
     priority: "high"
@@ -141,6 +144,9 @@ frontend:
       - working: "NA"
         agent: "main"
         comment: "Full candidate portal with 7 pages implemented using mock data"
+      - working: true
+        agent: "testing"
+        comment: "Candidate Dashboard and Applications page tested successfully. Dashboard has correct 4 KPI stats (LinkedIn Jobs Scraped: 127, Dice Jobs Available: 43, Applications Sent: 18, Resumes Tailored: 6). No 'Response Rate' or 'Profile Views' present (correct). Source Breakdown section shows LinkedIn and Dice scraping stats. Jobs Scraped by Skill chart displays horizontal bars for Java, Python, React, AWS, DevOps, .NET, Kubernetes. Latest Scraped Jobs shows exactly 6 rows with source icons, rates, engagement type badges, and time ago. Recent Activity only shows Email sent and Resume tailored items (no profile views or job matches). Top Recruiters This Week widget present. Applications page shows title 'Applications Sent', 3 summary stats (Total Sent: 8, Via LinkedIn Leads: 5, Via Dice Leads: 3), table with only 'Sent' status badges (green), no 'Viewed', 'Replied', or 'Interview' columns. All requirements verified."
 
   - task: "Business Portal - Dashboard, Leads, Candidates, Recruiters, Outreach, Analytics, Team, Settings"
     implemented: true
@@ -169,7 +175,7 @@ frontend:
 metadata:
   created_by: "main_agent"
   version: "1.0"
-  test_sequence: 0
+  test_sequence: 1
   run_ui: false
 
 test_plan:
@@ -183,3 +189,5 @@ test_plan:
 agent_communication:
   - agent: "main"
     message: "Initial setup complete. Cloned from https://github.com/RexBabu12/paidpilot-ui. Created .env files, installed dependencies, all services running. Backend API working at /api/. Frontend running on port 3000. App uses mock data for all UI features."
+  - agent: "testing"
+    message: "Comprehensive UI testing completed for Candidate Portal. Login flow, Dashboard, and Applications page all tested successfully. All requirements from review request verified: Dashboard has correct 4 KPI stats (no Response Rate or Profile Views), Source Breakdown section present, Jobs Scraped by Skill chart with horizontal bars, Latest Scraped Jobs shows 6 rows, Recent Activity only shows Email sent and Resume tailored, Top Recruiters widget present. Applications page has correct title, 3 summary stats, and table shows only 'Sent' status badges with no other status columns. Note: Auth state is not persisted (uses React useState), so direct URL navigation causes redirect to login. Navigation must be done via React Router links within the app."
