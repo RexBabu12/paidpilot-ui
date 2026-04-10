@@ -1,0 +1,8 @@
+{
+  "installCommand": "echo 'Dependencies installed in build step'",
+  "buildCommand": "cd frontend && npm install --legacy-peer-deps && CI=false npm run build",
+  "outputDirectory": "frontend/build",
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
