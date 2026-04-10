@@ -1012,3 +1012,36 @@ export const mockAdminSettings = {
     dailyLimitPerCandidate: 10
   }
 };
+
+// ─── Business Dashboard — Outreach Logs (simplified: Sent / Bounced + is_followup) ───
+export const mockOutreachLogs = [
+  { id: 1,  candidate: 'Rajesh Kumar',    job: 'Sr Java Dev — TechCorp',         recruiter: 'Sarah Johnson',     actor: 'Amy Roberts',  timestamp: '2025-02-09T10:30:00Z', status: 'Sent',    is_followup: false },
+  { id: 2,  candidate: 'Maria Garcia',    job: 'React Dev — Digital Innovations', recruiter: 'Michael Chen',      actor: 'Amy Roberts',  timestamp: '2025-02-09T09:15:00Z', status: 'Sent',    is_followup: false },
+  { id: 3,  candidate: 'Rajesh Kumar',    job: 'Backend Eng — CloudScale',        recruiter: 'Jennifer Martinez', actor: 'Amy Roberts',  timestamp: '2025-02-09T08:00:00Z', status: 'Sent',    is_followup: true  },
+  { id: 4,  candidate: 'David Park',      job: 'DevOps Lead — CloudScale',        recruiter: 'Jennifer Martinez', actor: 'James Liu',    timestamp: '2025-02-09T07:45:00Z', status: 'Sent',    is_followup: false },
+  { id: 5,  candidate: 'Ahmed Hassan',    job: 'Cloud Architect — MegaCorp',      recruiter: 'Tom Bradley',       actor: 'Nina Patel',   timestamp: '2025-02-09T11:00:00Z', status: 'Bounced', is_followup: false },
+  { id: 6,  candidate: 'Michael Chen',    job: '.NET Dev — Enterprise Sys',       recruiter: 'David Wilson',      actor: 'Amy Roberts',  timestamp: '2025-02-08T14:00:00Z', status: 'Sent',    is_followup: false },
+  { id: 7,  candidate: 'David Park',      job: 'SRE — StreamNet',                 recruiter: 'Lisa Anderson',     actor: 'James Liu',    timestamp: '2025-02-08T13:30:00Z', status: 'Sent',    is_followup: true  },
+  { id: 8,  candidate: 'Priya Sharma',    job: 'Data Eng — DataStream',           recruiter: 'Lisa Anderson',     actor: 'James Liu',    timestamp: '2025-02-08T10:15:00Z', status: 'Sent',    is_followup: false },
+  { id: 9,  candidate: 'Carlos Rivera',   job: 'SAP FICO — GlobalConsult',        recruiter: 'Rachel Kim',        actor: 'Amy Roberts',  timestamp: '2025-02-07T16:00:00Z', status: 'Bounced', is_followup: false },
+  { id: 10, candidate: 'Sarah Thompson',  job: 'QA Lead — TestPro',               recruiter: 'Lisa Anderson',     actor: 'James Liu',    timestamp: '2025-02-07T15:00:00Z', status: 'Sent',    is_followup: false },
+  { id: 11, candidate: 'Anika Patel',     job: 'BA — FinTech Corp',               recruiter: 'Jennifer Martinez', actor: 'Nina Patel',   timestamp: '2025-02-07T11:00:00Z', status: 'Sent',    is_followup: true  },
+  { id: 12, candidate: 'Maria Garcia',    job: 'Frontend Lead — PayTech',         recruiter: 'Lisa Anderson',     actor: 'Amy Roberts',  timestamp: '2025-02-06T09:00:00Z', status: 'Sent',    is_followup: false },
+  { id: 13, candidate: 'Rajesh Kumar',    job: 'Java Architect — FinServ',        recruiter: 'David Wilson',      actor: 'Amy Roberts',  timestamp: '2025-02-06T08:30:00Z', status: 'Sent',    is_followup: true  },
+  { id: 14, candidate: 'Michael Chen',    job: 'Full Stack — FinCorp',            recruiter: 'Sarah Johnson',     actor: 'Amy Roberts',  timestamp: '2025-02-05T14:00:00Z', status: 'Sent',    is_followup: false },
+  { id: 15, candidate: 'Lisa Wang',       job: 'SF Dev — CRM Corp',               recruiter: 'Michael Chen',      actor: 'Nina Patel',   timestamp: '2025-01-31T10:00:00Z', status: 'Bounced', is_followup: false },
+];
+
+// Per-candidate bench stats (emailsSent, followupsSent, bouncedCount, lastActivityDate)
+export const mockBenchStats = [
+  { candidateId: 1, name: 'Rajesh Kumar',   emailsSent: 18, followupsSent: 5, bouncedCount: 1, lastActivityDate: '2025-02-09' },
+  { candidateId: 2, name: 'Maria Garcia',   emailsSent: 12, followupsSent: 3, bouncedCount: 0, lastActivityDate: '2025-02-09' },
+  { candidateId: 3, name: 'David Park',     emailsSent: 24, followupsSent: 8, bouncedCount: 2, lastActivityDate: '2025-02-08' },
+  { candidateId: 4, name: 'Priya Sharma',   emailsSent: 8,  followupsSent: 2, bouncedCount: 0, lastActivityDate: '2025-02-09' },
+  { candidateId: 5, name: 'Michael Chen',   emailsSent: 20, followupsSent: 6, bouncedCount: 1, lastActivityDate: '2025-02-09' },
+  { candidateId: 6, name: 'Sarah Thompson', emailsSent: 10, followupsSent: 4, bouncedCount: 0, lastActivityDate: '2025-02-09' },
+  { candidateId: 7, name: 'Ahmed Hassan',   emailsSent: 15, followupsSent: 3, bouncedCount: 1, lastActivityDate: '2025-02-09' },
+  { candidateId: 8, name: 'Lisa Wang',      emailsSent: 6,  followupsSent: 1, bouncedCount: 1, lastActivityDate: '2025-01-31' },
+  { candidateId: 9, name: 'Carlos Rivera',  emailsSent: 14, followupsSent: 5, bouncedCount: 0, lastActivityDate: '2025-02-02' },
+  { candidateId: 10,name: 'Anika Patel',    emailsSent: 5,  followupsSent: 1, bouncedCount: 0, lastActivityDate: '2025-02-09' },
+];
