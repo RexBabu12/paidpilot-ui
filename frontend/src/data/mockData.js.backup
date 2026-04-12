@@ -1053,38 +1053,3 @@ export const mockBenchStats = [
   { candidateId: 9, name: 'Carlos Rivera',  emailsSent: 14, followupsSent: 5, bouncedCount: 0, lastActivityDate: '2025-02-02' },
   { candidateId: 10,name: 'Anika Patel',    emailsSent: 5,  followupsSent: 1, bouncedCount: 0, lastActivityDate: '2025-02-09' },
 ];
-
-export const mockBenchCandidates = [
-  {
-    id: 1,
-    name: 'John Smith',
-    primaryRole: 'Senior Java Developer',
-    experience: '8+ years',
-    status: 'Available',
-    skills: ['Java', 'Spring Boot', 'Microservices', 'AWS', 'Docker', 'Kubernetes']
-  },
-  {
-    id: 2,
-    name: 'Sarah Johnson',
-    primaryRole: 'React Frontend Engineer',
-    experience: '5+ years',
-    status: 'Available',
-    skills: ['React', 'TypeScript', 'Redux', 'Next.js', 'Tailwind CSS', 'GraphQL']
-  },
-  {
-    id: 3,
-    name: 'Michael Chen',
-    primaryRole: 'DevOps Engineer',
-    experience: '7+ years',
-    status: 'Interviewing',
-    skills: ['AWS', 'Terraform', 'Jenkins', 'Docker', 'Kubernetes', 'Python']
-  },
-  {
-    id: 4,
-    name: 'Emily Rodriguez',
-    primaryRole: 'Full Stack .NET Developer',
-    experience: '6+ years',
-    status: 'Available',
-    skills: ['.NET Core', 'C#', 'Azure', 'SQL Server', 'Angular', 'REST API']
-  }
-];

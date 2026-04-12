@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import { DashboardLayout } from '../../components/DashboardLayout';
+import { useAuth } from '../../contexts/AuthContext';
 import { FileText, Lightning, ArrowsLeftRight, Download } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
 import { mockJobs } from '../../data/mockData';
 
 const ResumeTailoring = () => {
+  const { user } = useAuth();
   const [selectedJob] = useState(mockJobs[0]);
   const [showComparison, setShowComparison] = useState(false);
 
   return (
-    <DashboardLayout userType="candidate">
+    <DashboardLayout userType={user?.type || "candidate"}>
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: -20 }}

@@ -13,6 +13,7 @@ import RecruiterPortal from './pages/candidate/RecruiterPortal';
 import Applications from './pages/candidate/Applications';
 import CandidateProfile from './pages/candidate/CandidateProfile';
 import CandidateSettings from './pages/candidate/CandidateSettings';
+import BusinessResumeLab from './pages/business/BusinessResumeLab';
 import BusinessDashboard from './pages/business/BusinessDashboard';
 import BusinessLeads from './pages/business/BusinessLeads';
 import BusinessRecruiters from './pages/business/BusinessRecruiters';
@@ -30,6 +31,18 @@ import AdminCandidates from './pages/admin/AdminCandidates';
 import AdminScraperControl from './pages/admin/AdminScraperControl';
 import AdminSystemInfo from './pages/admin/AdminSystemInfo';
 import AdminSettings from './pages/admin/AdminSettings';
+import AutoApplyDice from './pages/common/AutoApplyDice';
+import CustomVendorPortals from './pages/common/CustomVendorPortals';
+import MailAgent from './pages/common/MailAgent';
+import DesktopApp from './pages/common/DesktopApp';
+import SubscriptionPage from './pages/common/SubscriptionPage';
+import ResumeGenerator from './pages/candidate/ResumeGenerator';
+import BusinessResumeGenerator from './pages/business/BusinessResumeGenerator';
+import LandingPage from './pages/marketing/LandingPage';
+import PricingPage from './pages/marketing/PricingPage';
+import AboutPage from './pages/marketing/AboutPage';
+import WhatWeDoPage from './pages/marketing/WhatWeDoPage';
+import SignupPage from './pages/marketing/SignupPage';
 
 // Protected Route Component
 const ProtectedRoute = ({ children, allowedTypes }) => {
@@ -53,8 +66,15 @@ function App() {
         <div className="App">
           <BrowserRouter>
             <Routes>
+              {/* Marketing Pages */}
+              <Route path="/" element={<LandingPage />} />
+              <Route path="/what-we-do" element={<WhatWeDoPage />} />
+              <Route path="/pricing" element={<PricingPage />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/signup" element={<SignupPage />} />
+              
+              {/* Auth */}
               <Route path="/login" element={<Login />} />
-              <Route path="/" element={<Navigate to="/login" replace />} />
               
               {/* Candidate Routes */}
               <Route path="/candidate/dashboard" element={
@@ -90,6 +110,107 @@ function App() {
               <Route path="/candidate/settings" element={
                 <ProtectedRoute allowedTypes={['candidate']}>
                   <CandidateSettings />
+                </ProtectedRoute>
+              } />
+              <Route path="/candidate/subscription" element={
+                <ProtectedRoute allowedTypes={['candidate']}>
+                  <SubscriptionPage />
+                </ProtectedRoute>
+              } />
+              <Route path="/candidate/resume-generator" element={
+                <ProtectedRoute allowedTypes={['candidate']}>
+                  <ResumeGenerator />
+                </ProtectedRoute>
+              } />
+              
+              {/* Candidate Future Features */}
+              <Route path="/candidate/auto-apply-dice" element={
+                <ProtectedRoute allowedTypes={['candidate']}>
+                  <AutoApplyDice />
+                </ProtectedRoute>
+              } />
+              <Route path="/candidate/vendor-portals" element={
+                <ProtectedRoute allowedTypes={['candidate']}>
+                  <CustomVendorPortals />
+                </ProtectedRoute>
+              } />
+              <Route path="/candidate/mail-agent" element={
+                <ProtectedRoute allowedTypes={['candidate']}>
+                  <MailAgent />
+                </ProtectedRoute>
+              } />
+              <Route path="/candidate/desktop-app" element={
+                <ProtectedRoute allowedTypes={['candidate']}>
+                  <DesktopApp />
+                </ProtectedRoute>
+              } />
+              
+              {/* Bench Candidate Routes */}
+              <Route path="/bench/dashboard" element={
+                <ProtectedRoute allowedTypes={['bench']}>
+                  <CandidateDashboard />
+                </ProtectedRoute>
+              } />
+              <Route path="/bench/jobs" element={
+                <ProtectedRoute allowedTypes={['bench']}>
+                  <JobLeads />
+                </ProtectedRoute>
+              } />
+              <Route path="/bench/resume" element={
+                <ProtectedRoute allowedTypes={['bench']}>
+                  <ResumeLab />
+                </ProtectedRoute>
+              } />
+              <Route path="/bench/outreach" element={
+                <ProtectedRoute allowedTypes={['bench']}>
+                  <Applications />
+                </ProtectedRoute>
+              } />
+              <Route path="/bench/recruiters" element={
+                <ProtectedRoute allowedTypes={['bench']}>
+                  <RecruiterPortal />
+                </ProtectedRoute>
+              } />
+              <Route path="/bench/profile" element={
+                <ProtectedRoute allowedTypes={['bench']}>
+                  <CandidateProfile />
+                </ProtectedRoute>
+              } />
+              <Route path="/bench/settings" element={
+                <ProtectedRoute allowedTypes={['bench']}>
+                  <CandidateSettings />
+                </ProtectedRoute>
+              } />
+              <Route path="/bench/subscription" element={
+                <ProtectedRoute allowedTypes={['bench']}>
+                  <SubscriptionPage />
+                </ProtectedRoute>
+              } />
+              <Route path="/bench/resume-generator" element={
+                <ProtectedRoute allowedTypes={['bench']}>
+                  <ResumeGenerator />
+                </ProtectedRoute>
+              } />
+              
+              {/* Bench Future Features */}
+              <Route path="/bench/auto-apply-dice" element={
+                <ProtectedRoute allowedTypes={['bench']}>
+                  <AutoApplyDice />
+                </ProtectedRoute>
+              } />
+              <Route path="/bench/vendor-portals" element={
+                <ProtectedRoute allowedTypes={['bench']}>
+                  <CustomVendorPortals />
+                </ProtectedRoute>
+              } />
+              <Route path="/bench/mail-agent" element={
+                <ProtectedRoute allowedTypes={['bench']}>
+                  <MailAgent />
+                </ProtectedRoute>
+              } />
+              <Route path="/bench/desktop-app" element={
+                <ProtectedRoute allowedTypes={['bench']}>
+                  <DesktopApp />
                 </ProtectedRoute>
               } />
               
@@ -129,9 +250,46 @@ function App() {
                   <BusinessTeam />
                 </ProtectedRoute>
               } />
+              <Route path="/business/resumes" element={
+                <ProtectedRoute allowedTypes={['business']}>
+                  <BusinessResumeLab />
+                </ProtectedRoute>
+              } />
               <Route path="/business/settings" element={
                 <ProtectedRoute allowedTypes={['business']}>
                   <BusinessSettings />
+                </ProtectedRoute>
+              } />
+              <Route path="/business/subscription" element={
+                <ProtectedRoute allowedTypes={['business']}>
+                  <SubscriptionPage />
+                </ProtectedRoute>
+              } />
+              <Route path="/business/resume-generator" element={
+                <ProtectedRoute allowedTypes={['business']}>
+                  <BusinessResumeGenerator />
+                </ProtectedRoute>
+              } />
+              
+              {/* Business Future Features */}
+              <Route path="/business/auto-apply-dice" element={
+                <ProtectedRoute allowedTypes={['business']}>
+                  <AutoApplyDice />
+                </ProtectedRoute>
+              } />
+              <Route path="/business/vendor-portals" element={
+                <ProtectedRoute allowedTypes={['business']}>
+                  <CustomVendorPortals />
+                </ProtectedRoute>
+              } />
+              <Route path="/business/mail-agent" element={
+                <ProtectedRoute allowedTypes={['business']}>
+                  <MailAgent />
+                </ProtectedRoute>
+              } />
+              <Route path="/business/desktop-app" element={
+                <ProtectedRoute allowedTypes={['business']}>
+                  <DesktopApp />
                 </ProtectedRoute>
               } />
               
@@ -179,6 +337,13 @@ function App() {
               <Route path="/admin/settings" element={
                 <ProtectedRoute allowedTypes={['admin']}>
                   <AdminSettings />
+                </ProtectedRoute>
+              } />
+              
+              {/* Admin Future Features */}
+              <Route path="/admin/desktop-app" element={
+                <ProtectedRoute allowedTypes={['admin']}>
+                  <DesktopApp />
                 </ProtectedRoute>
               } />
             </Routes>
